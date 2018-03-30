@@ -1,0 +1,16 @@
+{
+  "presets": [["es2015", { "loose": true }]],
+  "plugins": ["transform-vue-jsx"],
+  "env": {
+    "utils": {
+      "plugins": [
+        ["module-resolver", {
+          "root": ["beescm-ui"],
+          "alias": {
+            "beescm-ui/src": "beescm-ui/lib"
+          }
+        }]
+      ]
+    }
+  }
+}
