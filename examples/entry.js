@@ -3,7 +3,6 @@ import entry from './app';
 import VueRouter from 'vue-router';
 import Element from 'main/index.js';
 import 'packages/theme-chalk/src/index.scss';
-import 'packages/beescm-chalk/index.scss';
 import routes from './route.config';
 import demoBlock from './components/demo-block.vue';
 import MainFooter from './components/footer.vue';
