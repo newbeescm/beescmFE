@@ -370,7 +370,8 @@ export default {
       if (this.$isServer) return;
       if (column.children && column.children.length > 0) return;
       /* istanbul ignore if */
-      if (this.draggingColumn && this.border) {
+      // if (this.draggingColumn && this.border) {
+      if (this.draggingColumn) {
         this.dragging = true;
 
         this.$parent.resizeProxyVisible = true;
@@ -449,7 +450,8 @@ export default {
 
       if (!column || !column.resizable) return;
 
-      if (!this.dragging && this.border) {
+      // if (!this.dragging && this.border) {
+      if (!this.dragging) {
         let rect = target.getBoundingClientRect();
 
         const bodyStyle = document.body.style;
