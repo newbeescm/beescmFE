@@ -85,6 +85,9 @@ const TableStore = function(table, initialState = {}) {
     _columns: [],
     originColumns: [],
     columns: [],
+    originDefaultColumns: [], // beescm 列表原始默认数据列，只填充一次
+    _customColumns: [], // beescm 上次表头自定义数据 oldVal
+    customColumns: [], // beescm 当前表头自定义数据
     fixedColumns: [],
     rightFixedColumns: [],
     leafColumns: [],
@@ -237,6 +240,7 @@ TableStore.prototype.mutations = {
     } else {
       array.push(column);
     }
+    states.originDefaultColumns = [].concat(array); // beescm niugm 保存默认数据列
 
     if (column.type === 'selection') {
       states.selectable = column.selectable;
@@ -320,7 +324,44 @@ TableStore.prototype.mutations = {
     }
     table.$emit('select-all', selection);
     states.isAllSelected = value;
-  })
+  }),
+  // beescm
+  setCustomColumns(states, payload) {
+    states._customColumns = [].concat(states.customColumns);
+    states.customColumns = payload;
+    let _columns = [].concat(states._columns) || [];
+    // 保留序号、复选框   	selection/index/expand
+    _columns = _columns.filter((column) => {
+      return column.type === 'index' || column.type === 'selection';
+    });
+    // states.customColumns.forEach((customColumn)=>{
+    //   for (let i = 0;i < _columns.length; i++) {
+    //     if (_columns[i].property === customColumn.property) {
+    //       _columns[i].fixed = customColumn.fixed;
+    //       break;
+    //     }
+    //   }
+    // });
+    // table重新渲染 开始
+    states._columns = [].concat(_columns).concat(payload);
+    this.updateColumns();
+    this.table.doLayout();
+    this.table.$ready = true;
+    // table重新渲染 结束
+    this.table.$emit('custom-columns-change', payload, states._customColumns);
+  },
+  // beescm
+  clearCustomColumns(states, payload) {
+    const _columns = [].concat(payload);
+    states._columns = _columns;
+
+    // table重新渲染 开始
+    this.updateColumns();
+    this.table.doLayout();
+    this.table.$ready = true;
+    // table重新渲染 结束
+    this.table.$emit('custom-columns-restore', payload, states._customColumns);
+  }
 };
 
 const doFlattenColumns = (columns) => {
@@ -404,7 +445,7 @@ TableStore.prototype.toggleRowExpansion = function(row, expanded) {
   const changed = toggleRowExpansion(this.states, row, expanded);
   if (changed) {
     this.table.$emit('expand-change', row, this.states.expandRows);
-    this.scheduleLayout();
+    this.scheduleLayout(true);
   }
 };
 

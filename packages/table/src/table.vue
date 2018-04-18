@@ -28,6 +28,11 @@
           width: layout.bodyWidth ? layout.bodyWidth + 'px' : ''
         }">
       </table-header>
+      <!--add by niugm for headerColumnSort-->
+      <div v-if="showCustomOptions" class="el-table__common-options">
+        <custom-panel :customColumnSort="customColumnSort" :store="store"></custom-panel>
+      </div>
+      <!--headerColumnSort end-->
     </div>
     <div
       class="el-table__body-wrapper"
@@ -214,6 +219,7 @@
 
 <script type="text/babel">
   import ElCheckbox from 'beescm-ui/packages/checkbox';
+  import ElPopover from 'beescm-ui/packages/popover';
   import debounce from 'throttle-debounce/debounce';
   import { addResizeListener, removeResizeListener } from 'beescm-ui/src/utils/resize-event';
   import Mousewheel from 'beescm-ui/src/directives/mousewheel';
@@ -224,6 +230,10 @@
   import TableBody from './table-body';
   import TableHeader from './table-header';
   import TableFooter from './table-footer';
+
+  // niugm add start
+  import CustomPanel from './custom-panel';
+  // niugm add end
 
   let tableIdSeed = 1;
 
@@ -311,14 +321,35 @@
       selectOnIndeterminate: {
         type: Boolean,
         default: true
+      },
+
+      // niugm add start @ 2018-04-11 是否启用高级功能
+      showCustomOptions: {
+        type: Boolean,
+        default: false
+      },
+      // 高级功能选项
+      customOptions: {
+        type: Object
+      },
+
+      // 表头排序的数据源
+      customColumnSort: {
+        type: Array,
+        default: function() {
+          return [];
+        }
       }
+      // niugm add end
     },
 
     components: {
       TableHeader,
       TableFooter,
       TableBody,
-      ElCheckbox
+      ElCheckbox,
+      ElPopover,
+      CustomPanel
     },
 
     methods: {

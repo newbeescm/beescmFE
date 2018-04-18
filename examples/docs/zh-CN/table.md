@@ -344,6 +344,10 @@
 
       indexMethod(index) {
         return index * 2;
+      },
+      
+      handleChange(val, oldVal) {
+        console.log('common-columns-change', val, oldVal)
       }
     },
 
@@ -384,6 +388,116 @@
 ## Table 表格
 
 用于展示多条结构类似的数据，可对数据进行排序、筛选、对比或其他自定义操作。
+
+### 表头排序 [beescm-ui]
+
+表头列自定义排序、固定列
+
+:::demo 使用`showCustomOptions`属性，设置为true, 即可启用高级功能
+```html
+  <template>
+    <el-table
+      :data="tableData"
+      :show-custom-options="true"
+      @custom-columns-change="handleChange"
+      style="width: 100%">
+      <el-table-column
+        type="selection"
+        fixed
+        width="55">
+      </el-table-column>
+      <el-table-column
+        type="index"
+        fixed
+        width="50">
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="日期"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="address"
+        width="200"
+        label="地址">
+      </el-table-column>
+      <el-table-column
+        prop="province"
+        width="100"
+        label="省份">
+      </el-table-column> 
+      <el-table-column
+        prop="city"
+        width="100"
+        label="城市">
+      </el-table-column> 
+      <el-table-column
+       prop="zip"
+       width="100"
+       label="邮编">
+      </el-table-column>
+      <el-table-column
+        prop="tag"
+        width="100"
+        label="标签">
+      </el-table-column>               
+    </el-table>
+  </template>
+
+  <script>
+    export default {
+      data() {
+        return {
+          tableData: [{
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '家'
+                  }, {
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '公司'
+                  }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '家'
+                  }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '公司'
+                  }],
+          headerColumnSort: []
+        }
+      },
+      methods: {
+        handleChange(val, oldVal) {
+          console.log('common-columns-change', val, oldVal)
+        }
+      }
+    }
+  </script>
+```
+:::
 
 ### 基础表格
 
