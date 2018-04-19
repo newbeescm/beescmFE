@@ -225,6 +225,11 @@
           amount2: '4.1',
           amount3: 15
         }],
+        customData: [
+          {property: 'name', fixed: true},
+          {property: 'address', fixed: false},
+          {property: 'city', fixed: false}
+        ],
         currentRow: null,
         multipleSelection: []
       };
@@ -346,16 +351,23 @@
         return index * 2;
       },
       
-      handleChange(val, oldVal) {
-        console.log('common-columns-change', val, oldVal)
+      handleChange(val) {
+        console.log('common-columns-change', JSON.stringify(val))
+      },
+      handleRestore() {
+        console.log('恢复默认');
       }
     },
-
-    watch: {
-      multipleSelection(val) {
-        console.log('selection: ', val);
-      }
-    }
+   watch: {
+     multipleSelection(val) {
+       console.log('selection: ', val);
+     }
+   },
+   mounted() {
+        setTimeout(()=>{
+          this.$refs['testTable'].setCustomColumns(this.customData);
+        }, 1500);
+   }
   };
 </script>
 
@@ -393,13 +405,15 @@
 
 表头列自定义排序、固定列
 
-:::demo 使用`showCustomOptions`属性，设置为true, 即可启用高级功能
+:::demo 使用`showCustomOptions`属性，设置为true, 即可启用高级功能。确认排序后触发事件：`custom-columns-confirm`，恢复默认触发事件：`custom-columns-restore`。table 方法：`setCustomColumns()`，设置持久化的列选项。
 ```html
   <template>
     <el-table
+      ref="testTable"
       :data="tableData"
       :show-custom-options="true"
-      @custom-columns-change="handleChange"
+      @custom-columns-confirm="handleChange"
+      @custom-columns-restore="handleRestore"
       style="width: 100%">
       <el-table-column
         type="selection"
@@ -416,11 +430,7 @@
         label="日期"
         width="100">
       </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="150">
-      </el-table-column>
+    
       <el-table-column
         prop="address"
         width="200"
@@ -491,7 +501,10 @@
       },
       methods: {
         handleChange(val, oldVal) {
-          console.log('common-columns-change', val, oldVal)
+          console.log('common-columns-confirm', val, oldVal);
+        },
+        handleRestore() {
+          console.log('恢复默认');
         }
       }
     }

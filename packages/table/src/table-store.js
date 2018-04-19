@@ -86,7 +86,6 @@ const TableStore = function(table, initialState = {}) {
     originColumns: [],
     columns: [],
     originDefaultColumns: [], // beescm 列表原始默认数据列，只填充一次
-    _customColumns: [], // beescm 上次表头自定义数据 oldVal
     customColumns: [], // beescm 当前表头自定义数据
     fixedColumns: [],
     rightFixedColumns: [],
@@ -240,6 +239,7 @@ TableStore.prototype.mutations = {
     } else {
       array.push(column);
     }
+
     states.originDefaultColumns = [].concat(array); // beescm niugm 保存默认数据列
 
     if (column.type === 'selection') {
@@ -327,28 +327,35 @@ TableStore.prototype.mutations = {
   }),
   // beescm
   setCustomColumns(states, payload) {
-    states._customColumns = [].concat(states.customColumns);
-    states.customColumns = payload;
+    const result = [];
     let _columns = [].concat(states._columns) || [];
     // 保留序号、复选框   	selection/index/expand
     _columns = _columns.filter((column) => {
-      return column.type === 'index' || column.type === 'selection';
+      // 业务线内的expand列应该固定
+      return column.type === 'index' || column.type === 'selection' || column.type === 'expand';
     });
-    // states.customColumns.forEach((customColumn)=>{
-    //   for (let i = 0;i < _columns.length; i++) {
-    //     if (_columns[i].property === customColumn.property) {
-    //       _columns[i].fixed = customColumn.fixed;
-    //       break;
-    //     }
-    //   }
-    // });
+    // 处理排序及锁定
+    payload.forEach((item)=>{
+      result.push({property: item.property, customLabel: item.label, fixed: item.fixed});
+      let _originColumn = states.originDefaultColumns.find((column)=>{
+        return column.property === item.property;
+      });
+
+      if (_originColumn) {
+        delete item.id;
+        _columns.push(Object.assign({}, _originColumn, item));
+        states.customColumns.push(Object.assign({}, _originColumn, item));
+      } else {
+        console.log(`custom column error: the "${item.property}" column has been removed`);
+      }
+    });
     // table重新渲染 开始
-    states._columns = [].concat(_columns).concat(payload);
+    states._columns = [].concat(_columns);
     this.updateColumns();
     this.table.doLayout();
     this.table.$ready = true;
     // table重新渲染 结束
-    this.table.$emit('custom-columns-change', payload, states._customColumns);
+    this.table.$emit('custom-columns-confirm', result);
   },
   // beescm
   clearCustomColumns(states, payload) {
@@ -357,10 +364,10 @@ TableStore.prototype.mutations = {
 
     // table重新渲染 开始
     this.updateColumns();
-    this.table.doLayout();
+    this.scheduleLayout(true);
     this.table.$ready = true;
     // table重新渲染 结束
-    this.table.$emit('custom-columns-restore', payload, states._customColumns);
+    this.table.$emit('custom-columns-restore');
   }
 };
 

@@ -30,7 +30,7 @@
       </table-header>
       <!--add by niugm for headerColumnSort-->
       <div v-if="showCustomOptions" class="el-table__common-options">
-        <custom-panel :customColumnSort="customColumnSort" :store="store"></custom-panel>
+        <custom-panel :store="store"></custom-panel>
       </div>
       <!--headerColumnSort end-->
     </div>
@@ -323,7 +323,7 @@
         default: true
       },
 
-      // niugm add start @ 2018-04-11 是否启用高级功能
+      // niugm add 是否启用高级功能
       showCustomOptions: {
         type: Boolean,
         default: false
@@ -331,16 +331,8 @@
       // 高级功能选项
       customOptions: {
         type: Object
-      },
-
-      // 表头排序的数据源
-      customColumnSort: {
-        type: Array,
-        default: function() {
-          return [];
-        }
       }
-      // niugm add end
+      // end
     },
 
     components: {
@@ -473,6 +465,10 @@
         if (this.shouldUpdateHeight) {
           this.layout.updateElsHeight();
         }
+      },
+
+      setCustomColumns(options) {
+        this.store.commit('setCustomColumns', options);
       }
     },
 

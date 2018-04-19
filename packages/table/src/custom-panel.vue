@@ -18,7 +18,7 @@
               <div class="head">{{ t('el.beescm.table.headerSort.leftTab') }}</div>
               <div class="body">
                 <ul>
-                  <li v-for="(column, index) in originDefaultColumns" v-if="column.type!=='selection' && column.type!=='index'" >
+                  <li v-for="(column, index) in originDefaultColumns" v-if="column.type!=='selection' && column.type!=='index' && column.type!=='expand'" >
                     <el-checkbox v-model="originCheckedColumns[column.property]" @change="(checked)=>{ handleCheck(checked, column) }" :key="column.prop" :label="column.label"><span style="font-size: 12px">{{ column.label }}</span></el-checkbox>
                   </li>
                 </ul>
@@ -91,11 +91,6 @@
     props: {
       store: {
         required: true
-      },
-      // 持久化的用户列配置
-      customColumnSort: {
-        type: Array,
-        default: []
       }
     },
 
@@ -213,12 +208,20 @@
     },
 
     mounted() {
-      if (this.customColumnSort.length > 0) {
-        this.sortedColumns = [].concat(this.customColumnSort);
-      }
+
     },
     watch: {
-
+      customColumns(val) {
+        if (val) {
+          val.forEach((column)=>{
+            let _column = this.sortedColumns.find(__column => __column.property === column.property);
+            if (!_column) {
+              this.originCheckedColumns[column.property] = true;
+              this.sortedColumns.push(column);
+            }
+          });
+        }
+      }
     }
   };
 </script>
