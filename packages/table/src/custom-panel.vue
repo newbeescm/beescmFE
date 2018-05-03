@@ -4,13 +4,15 @@
 */
 <template>
     <div class="el-table-custom-panel">
-      <el-popover
-        width="36"
-        trigger="click"
-      >
-          <div @click="handleShowHeaderColumnSort">{{ t('el.beescm.table.headerSort.title') }}</div>
-          <span class="entry-icon" slot="reference"><i class="el-icon-menu"></i></span>
-      </el-popover>
+      <!-- 功能下拉列表暂时隐藏 -->
+      <!--<el-popover-->
+        <!--width="36"-->
+        <!--trigger="click"-->
+      <!--&gt;-->
+          <!--<div @click="handleShowHeaderColumnSort">{{ t('el.beescm.table.headerSort.title') }}</div>-->
+          <!--<span class="entry-icon" slot="reference"><i class="el-icon-menu"></i></span>-->
+      <!--</el-popover>-->
+      <div><i class="el-icon-menu entry-icon" :title="t('el.beescm.table.headerSort.title')" @click="handleShowHeaderColumnSort"></i></div>
       <el-dialog class="dialog-blue" :title="t('el.beescm.table.headerSort.title')" :show-close="false" :visible.sync="showHeaderColumnSort" width="630px">
         <section class="dialog-content">
           <div class="el-table-header__column_sort">
