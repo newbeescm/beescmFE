@@ -1,6 +1,6 @@
 {
   "name": "beescm-ui",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Beescm Component Library for Vue.js,base on element-ui 2.2.2",
   "main": "lib/beescm-ui.common.js",
   "files": [
