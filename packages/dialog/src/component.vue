@@ -48,10 +48,10 @@
         type: Boolean,
         default: true
       },
-
+      // beescm修改默认值
       modalAppendToBody: {
         type: Boolean,
-        default: true
+        default: false
       },
 
       appendToBody: {
@@ -63,10 +63,10 @@
         type: Boolean,
         default: true
       },
-
+      // beescm修改默认值
       closeOnClickModal: {
         type: Boolean,
-        default: true
+        default: false
       },
 
       closeOnPressEscape: {
