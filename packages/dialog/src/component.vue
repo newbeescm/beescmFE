@@ -53,7 +53,11 @@
         type: Boolean,
         default: false
       },
-
+      // beescm弹框添加到指定class下
+      appendToClass: {
+        type: String,
+        default: 'temporary-tabs'
+      },
       appendToBody: {
         type: Boolean,
         default: false
@@ -116,6 +120,11 @@
           });
           if (this.appendToBody) {
             document.body.appendChild(this.$el);
+          } else {
+            // beescm弹框位置修改
+            const dom = document.body.querySelector(`.${this.appendToClass}`);
+            if (dom) {dom.appendChild(this.$el);}
+            // ----------------------
           }
         } else {
           this.$el.removeEventListener('scroll', this.updatePopper);

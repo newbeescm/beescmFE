@@ -75,6 +75,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // beescm modal添加到指定class下
+    appendToClass: {
+      type: String,
+      default: 'temporary-tabs'
+    },
     lockScroll: {
       type: Boolean,
       default: true
@@ -184,7 +189,16 @@ export default {
           PopupManager.closeModal(this._popupId);
           this._closing = false;
         }
-        PopupManager.openModal(this._popupId, PopupManager.nextZIndex(), this.modalAppendToBody ? undefined : dom, props.modalClass, props.modalFade);
+        // beescm 根据class确定modal位置
+        let domByClass = dom;
+        if (!this.modalAppendToBody && this.appendToClass) {
+          domByClass = document.body.querySelector(`.${this.appendToClass}`);
+          if (domByClass) {
+            domByClass = domByClass.firstChild || dom;
+          }
+        }
+        PopupManager.openModal(this._popupId, PopupManager.nextZIndex(), this.modalAppendToBody ? undefined : domByClass, props.modalClass, props.modalFade);
+        // ----------------------------------
         if (props.lockScroll) {
           if (!this.bodyOverflow) {
             this.bodyPaddingRight = document.body.style.paddingRight;
