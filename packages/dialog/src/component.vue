@@ -56,7 +56,7 @@
       // beescm弹框添加到指定class下
       appendToClass: {
         type: String,
-        default: 'temporary-tabs'
+        default: 'router-out-content'
       },
       appendToBody: {
         type: Boolean,
