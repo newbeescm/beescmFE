@@ -78,7 +78,7 @@ export default {
     // beescm modal添加到指定class下
     appendToClass: {
       type: String,
-      default: 'temporary-tabs'
+      default: 'router-out-content'
     },
     lockScroll: {
       type: Boolean,
