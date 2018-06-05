@@ -554,95 +554,96 @@
       overflow: hidden;
     }
   }
+}
 
-  //beescm-ui niugm add,20180412,先实现功能，再拆分scss
+/*-------------自定义---------------------------*/
+//beescm-ui niugm add,20180412,先实现功能，再拆分scss
 
-  //表头自定义功能热区
-  .el-table__common-options {
-    top: 0;
-    right: 0;
-    line-height: 100%;
-    position: absolute;
+//表头自定义功能热区
+.el-table__common-options {
+  top: 0;
+  right: 0;
+  line-height: 100%;
+  position: absolute;
 
-    .entry-icon {
-      cursor: pointer;
-    }
+  .entry-icon {
+    cursor: pointer;
+  }
 
-    //自定义功能面板
-    .el-table-custom-panel {
-      background: #cccccc;
+  //自定义功能面板
+  .el-table-custom-panel {
+    background: #cccccc;
 
-      //表头排序操作区容器
-      .el-table-header__column_sort {
-        .sort-content {
-          display: inline-block;
-          box-sizing: border-box;
-          width: 276px;
-          vertical-align: top;
-          &.gutter {
-            margin-right: 30px;
-          }
+    //表头排序操作区容器
+    .el-table-header__column_sort {
+      .sort-content {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 276px;
+        vertical-align: top;
+        &.gutter {
+          margin-right: 30px;
+        }
 
-          .head {
-            margin-bottom: 10px;
-          }
-          .body {
-            font-size: 12px;
-            ul {
-              margin: 0;
-              padding: 0;
-              height: 234px;
+        .head {
+          margin-bottom: 10px;
+        }
+        .body {
+          font-size: 12px;
+          ul {
+            margin: 0;
+            padding: 0;
+            height: 234px;
+            box-sizing: border-box;
+            border: solid 1px #CCCCCC;
+            overflow-y: scroll;
+            li {
+              position: relative;
+              padding: 0 10px;
               box-sizing: border-box;
-              border: solid 1px #CCCCCC;
-              overflow-y: scroll;
-              li {
-                position: relative;
-                padding: 0 10px;
+              line-height: 36px;
+              list-style: none;
+              border-bottom: solid 1px #CCCCCC;
+
+              //&:last-child {
+              //  border: none;
+              //}
+
+              &.fixed{
+                background: #fafafa;
+              }
+
+              .actions {
                 box-sizing: border-box;
-                line-height: 36px;
-                list-style: none;
-                border-bottom: solid 1px #CCCCCC;
+                position: absolute;
+                right: 0;
+                top: 0;
+                display: inline-block;
+                width: 136px;
+                padding: 0 0 0 10px;
+                background: #fafafa;
 
-                //&:last-child {
-                //  border: none;
-                //}
-
-                &.fixed{
-                  background: #fafafa;
+                i{
+                  width: 16px;
+                  height: 16px;
+                  cursor: pointer;
+                  margin-right: 5px;
+                  color: #bfcadb;
+                  font-size: 14px;
+                  &:hover {
+                    color: #7d8eaa;
+                  }
                 }
-
-                .actions {
-                  box-sizing: border-box;
+                .remove {
+                  border: 0;
+                  padding: 0 2px;
                   position: absolute;
                   right: 0;
-                  top: 0;
-                  display: inline-block;
-                  width: 136px;
-                  padding: 0 0 0 10px;
-                  background: #fafafa;
-
+                  box-sizing: border-box;
+                  background: #e24d4d;
                   i{
-                    width: 16px;
-                    height: 16px;
-                    cursor: pointer;
-                    margin-right: 5px;
-                    color: #bfcadb;
-                    font-size: 14px;
-                    &:hover {
-                      color: #7d8eaa;
-                    }
-                  }
-                  .remove {
-                    border: 0;
-                    padding: 0 2px;
-                    position: absolute;
-                    right: 0;
-                    box-sizing: border-box;
-                    background: #e24d4d;
-                    i{
-                      margin-right: 0;
-                      color: #FFFFFF;
-                    }
+                    margin-right: 0;
+                    color: #FFFFFF;
                   }
                 }
               }
@@ -653,8 +654,6 @@
     }
   }
 }
-
-/*-------------自定义---------------------------*/
 .tr-selection{
   background-color: #daf0fe!important;
 }
