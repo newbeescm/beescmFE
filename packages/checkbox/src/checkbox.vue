@@ -109,6 +109,15 @@
 
       isChecked() {
         if ({}.toString.call(this.model) === '[object Boolean]') {
+          if (this.$el && this.$el.offsetParent.className.indexOf('el-table-column--selection') > -1) {
+            const tdArr = this.$el.offsetParent.parentElement.children;
+            Array.prototype.slice.call(tdArr).forEach(item=>{
+              const classArr = item.className ? item.className.split(/\s+/) : [];
+              const index = classArr.indexOf('tr-selection');
+              this.model ? index === -1 ? classArr.push('tr-selection') : '' : index > -1 ? classArr.splice(index, 1) : '';
+              item.className = classArr.join(' ');
+            });
+          }
           return this.model;
         } else if (Array.isArray(this.model)) {
           return this.model.indexOf(this.label) > -1;

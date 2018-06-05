@@ -48,12 +48,16 @@
         type: Boolean,
         default: true
       },
-
+      // beescm修改默认值
       modalAppendToBody: {
         type: Boolean,
-        default: true
+        default: false
       },
-
+      // beescm弹框添加到指定class下
+      appendToClass: {
+        type: String,
+        default: 'router-out-content'
+      },
       appendToBody: {
         type: Boolean,
         default: false
@@ -63,10 +67,10 @@
         type: Boolean,
         default: true
       },
-
+      // beescm修改默认值
       closeOnClickModal: {
         type: Boolean,
-        default: true
+        default: false
       },
 
       closeOnPressEscape: {
@@ -116,6 +120,11 @@
           });
           if (this.appendToBody) {
             document.body.appendChild(this.$el);
+          } else {
+            // beescm弹框位置修改
+            const dom = document.body.querySelector(`.${this.appendToClass}`);
+            if (dom) {dom.appendChild(this.$el);}
+            // ----------------------
           }
         } else {
           this.$el.removeEventListener('scroll', this.updatePopper);

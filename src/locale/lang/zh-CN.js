@@ -104,6 +104,22 @@ export default {
       filterPlaceholder: '请输入搜索内容',
       noCheckedFormat: '共 {total} 项',
       hasCheckedFormat: '已选 {checked}/{total} 项'
+    },
+    // add by niugm @ 20180412
+    beescm: {
+      common: {
+        confirm: '确认',
+        cancel: '取消',
+        reset: '重置',
+        restore: '恢复默认'
+      },
+      table: {
+        headerSort: {
+          title: '表头排序',
+          leftTab: '可排序的列',
+          rightTab: '已选择的列'
+        }
+      }
     }
   }
 };

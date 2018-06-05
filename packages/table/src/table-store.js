@@ -85,6 +85,8 @@ const TableStore = function(table, initialState = {}) {
     _columns: [],
     originColumns: [],
     columns: [],
+    originDefaultColumns: [], // beescm 列表原始默认数据列，只填充一次
+    customColumns: [], // beescm 当前表头自定义数据
     fixedColumns: [],
     rightFixedColumns: [],
     leafColumns: [],
@@ -238,6 +240,8 @@ TableStore.prototype.mutations = {
       array.push(column);
     }
 
+    states.originDefaultColumns = [].concat(array); // beescm niugm 保存默认数据列
+
     if (column.type === 'selection') {
       states.selectable = column.selectable;
       states.reserveSelection = column.reserveSelection;
@@ -320,7 +324,51 @@ TableStore.prototype.mutations = {
     }
     table.$emit('select-all', selection);
     states.isAllSelected = value;
-  })
+  }),
+  // beescm
+  setCustomColumns(states, payload) {
+    const result = [];
+    let _columns = [].concat(states._columns) || [];
+    // 保留序号、复选框   	selection/index/expand
+    _columns = _columns.filter((column) => {
+      // 业务线内的expand列应该固定
+      return column.type === 'index' || column.type === 'selection' || column.type === 'expand';
+    });
+    // 处理排序及锁定
+    payload.forEach((item)=>{
+      result.push({property: item.property, customLabel: item.label, fixed: item.fixed});
+      let _originColumn = states.originDefaultColumns.find((column)=>{
+        return column.property === item.property;
+      });
+
+      if (_originColumn) {
+        delete item.id;
+        _columns.push(Object.assign({}, _originColumn, item));
+        states.customColumns.push(Object.assign({}, _originColumn, item));
+      } else {
+        console.log(`custom column error: the "${item.property}" column has been removed`);
+      }
+    });
+    // table重新渲染 开始
+    states._columns = [].concat(_columns);
+    this.updateColumns();
+    this.table.doLayout();
+    this.table.$ready = true;
+    // table重新渲染 结束
+    this.table.$emit('custom-columns-confirm', result);
+  },
+  // beescm
+  clearCustomColumns(states, payload) {
+    const _columns = [].concat(payload);
+    states._columns = _columns;
+
+    // table重新渲染 开始
+    this.updateColumns();
+    this.scheduleLayout(true);
+    this.table.$ready = true;
+    // table重新渲染 结束
+    this.table.$emit('custom-columns-restore');
+  }
 };
 
 const doFlattenColumns = (columns) => {
@@ -404,7 +452,7 @@ TableStore.prototype.toggleRowExpansion = function(row, expanded) {
   const changed = toggleRowExpansion(this.states, row, expanded);
   if (changed) {
     this.table.$emit('expand-change', row, this.states.expandRows);
-    this.scheduleLayout();
+    this.scheduleLayout(true);
   }
 };
 

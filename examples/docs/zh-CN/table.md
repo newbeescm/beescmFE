@@ -225,6 +225,11 @@
           amount2: '4.1',
           amount3: 15
         }],
+        customData: [
+          {property: 'name', fixed: true},
+          {property: 'address', fixed: false},
+          {property: 'city', fixed: false}
+        ],
         currentRow: null,
         multipleSelection: []
       };
@@ -344,14 +349,25 @@
 
       indexMethod(index) {
         return index * 2;
+      },
+      
+      handleChange(val) {
+        console.log('common-columns-change', JSON.stringify(val))
+      },
+      handleRestore() {
+        console.log('恢复默认');
       }
     },
-
-    watch: {
-      multipleSelection(val) {
-        console.log('selection: ', val);
-      }
-    }
+   watch: {
+     multipleSelection(val) {
+       console.log('selection: ', val);
+     }
+   },
+   mounted() {
+        setTimeout(()=>{
+          this.$refs['testTable'].setCustomColumns(this.customData);
+        }, 1500);
+   }
   };
 </script>
 
@@ -384,6 +400,117 @@
 ## Table 表格
 
 用于展示多条结构类似的数据，可对数据进行排序、筛选、对比或其他自定义操作。
+
+### 表头排序 [beescm-ui]
+
+表头列自定义排序、固定列
+
+:::demo 使用`showCustomOptions`属性，设置为true, 即可启用高级功能。确认排序后触发事件：`custom-columns-confirm`，恢复默认触发事件：`custom-columns-restore`。table 方法：`setCustomColumns()`，设置持久化的列选项。
+```html
+  <template>
+    <el-table
+      ref="testTable"
+      :data="tableData"
+      :show-custom-options="true"
+      @custom-columns-confirm="handleChange"
+      @custom-columns-restore="handleRestore"
+      style="width: 100%">
+      <el-table-column
+        type="selection"
+        fixed
+        width="55">
+      </el-table-column>
+      <el-table-column
+        type="index"
+        fixed
+        width="50">
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="日期"
+        width="100">
+      </el-table-column>
+    
+      <el-table-column
+        prop="address"
+        width="200"
+        label="地址">
+      </el-table-column>
+      <el-table-column
+        prop="province"
+        width="100"
+        label="省份">
+      </el-table-column> 
+      <el-table-column
+        prop="city"
+        width="100"
+        label="城市">
+      </el-table-column> 
+      <el-table-column
+       prop="zip"
+       width="100"
+       label="邮编">
+      </el-table-column>
+      <el-table-column
+        prop="tag"
+        width="100"
+        label="标签">
+      </el-table-column>               
+    </el-table>
+  </template>
+
+  <script>
+    export default {
+      data() {
+        return {
+          tableData: [{
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '家'
+                  }, {
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '公司'
+                  }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '家'
+                  }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    province: '上海',
+                    city: '普陀区',
+                    address: '上海市普陀区金沙江路 1518 弄',
+                    zip: 200333,
+                    tag: '公司'
+                  }],
+          headerColumnSort: []
+        }
+      },
+      methods: {
+        handleChange(val, oldVal) {
+          console.log('common-columns-confirm', val, oldVal);
+        },
+        handleRestore() {
+          console.log('恢复默认');
+        }
+      }
+    }
+  </script>
+```
+:::
 
 ### 基础表格
 
