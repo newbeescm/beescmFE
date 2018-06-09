@@ -668,6 +668,7 @@
 | auto-complete | select input 的 autocomplete 属性 | string | — | off |
 | placeholder | 占位符 | string | — | 请选择 |
 | filterable | 是否可搜索 | boolean | — | false |
+| readonly | 选中后的输入框是否只读 | boolean    | — | true（beescm） |
 | allow-create | 是否允许用户创建新条目，需配合 `filterable` 使用 | boolean | — | false |
 | filter-method | 自定义搜索方法 | function | — | — |
 | remote | 是否为远程搜索 | boolean | — | false |

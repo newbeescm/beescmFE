@@ -64,6 +64,7 @@
         :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
         ref="input">
     </div>
+    <!-- beescm readonly为确定下拉搜索选中后是否可输入-->
     <el-input
       ref="reference"
       v-model="selectedLabel"
@@ -74,7 +75,7 @@
       :auto-complete="autoComplete"
       :size="selectSize"
       :disabled="selectDisabled"
-      :readonly="!filterable || multiple || !visible"
+      :readonly="!filterable&&readonly || multiple || !visible&&readonly"
       :validate-event="false"
       :class="{ 'is-focus': visible }"
       @focus="handleFocus"
@@ -271,6 +272,11 @@
         default() {
           return t('el.select.placeholder');
         }
+      },
+      // beescm 为动态控制下拉搜索选中后是否可输入
+      readonly: {
+        type: Boolean,
+        default: true
       },
       defaultFirstOption: Boolean,
       reserveKeyword: Boolean,
