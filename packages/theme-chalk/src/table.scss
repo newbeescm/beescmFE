@@ -570,82 +570,82 @@
     cursor: pointer;
   }
 
-  //自定义功能面板
+  //自定义功能面板，这层在打开下拉菜单后需要
   .el-table-custom-panel {
     background: #cccccc;
+  }
+}
 
-    //表头排序操作区容器
-    .el-table-header__column_sort {
-      .sort-content {
-        display: inline-block;
+//表头排序操作区容器
+.el-table-header__column_sort {
+  .sort-content {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 276px;
+    vertical-align: top;
+    &.gutter {
+      margin-right: 30px;
+    }
+
+    .head {
+      margin-bottom: 10px;
+    }
+    .body {
+      font-size: 12px;
+      ul {
+        margin: 0;
+        padding: 0;
+        height: 234px;
         box-sizing: border-box;
-        width: 276px;
-        vertical-align: top;
-        &.gutter {
-          margin-right: 30px;
-        }
+        border: solid 1px #CCCCCC;
+        overflow-y: scroll;
+        li {
+          position: relative;
+          padding: 0 10px;
+          box-sizing: border-box;
+          line-height: 36px;
+          list-style: none;
+          border-bottom: solid 1px #CCCCCC;
 
-        .head {
-          margin-bottom: 10px;
-        }
-        .body {
-          font-size: 12px;
-          ul {
-            margin: 0;
-            padding: 0;
-            height: 234px;
+          //&:last-child {
+          //  border: none;
+          //}
+
+          &.fixed{
+            background: #fafafa;
+          }
+
+          .actions {
             box-sizing: border-box;
-            border: solid 1px #CCCCCC;
-            overflow-y: scroll;
-            li {
-              position: relative;
-              padding: 0 10px;
-              box-sizing: border-box;
-              line-height: 36px;
-              list-style: none;
-              border-bottom: solid 1px #CCCCCC;
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: inline-block;
+            width: 136px;
+            padding: 0 0 0 10px;
+            background: #fafafa;
 
-              //&:last-child {
-              //  border: none;
-              //}
-
-              &.fixed{
-                background: #fafafa;
+            i{
+              width: 16px;
+              height: 16px;
+              cursor: pointer;
+              margin-right: 5px;
+              color: #bfcadb;
+              font-size: 14px;
+              &:hover {
+                color: #7d8eaa;
               }
-
-              .actions {
-                box-sizing: border-box;
-                position: absolute;
-                right: 0;
-                top: 0;
-                display: inline-block;
-                width: 136px;
-                padding: 0 0 0 10px;
-                background: #fafafa;
-
-                i{
-                  width: 16px;
-                  height: 16px;
-                  cursor: pointer;
-                  margin-right: 5px;
-                  color: #bfcadb;
-                  font-size: 14px;
-                  &:hover {
-                    color: #7d8eaa;
-                  }
-                }
-                .remove {
-                  border: 0;
-                  padding: 0 2px;
-                  position: absolute;
-                  right: 0;
-                  box-sizing: border-box;
-                  background: #e24d4d;
-                  i{
-                    margin-right: 0;
-                    color: #FFFFFF;
-                  }
-                }
+            }
+            .remove {
+              border: 0;
+              padding: 0 2px;
+              position: absolute;
+              right: 0;
+              box-sizing: border-box;
+              background: #e24d4d;
+              i{
+                margin-right: 0;
+                color: #FFFFFF;
               }
             }
           }

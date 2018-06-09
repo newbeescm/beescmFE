@@ -13,7 +13,7 @@
           <!--<span class="entry-icon" slot="reference"><i class="el-icon-menu"></i></span>-->
       <!--</el-popover>-->
       <div><i class="el-icon-menu entry-icon" :title="t('el.beescm.table.headerSort.title')" @click="handleShowHeaderColumnSort"></i></div>
-      <el-dialog class="dialog-blue" :title="t('el.beescm.table.headerSort.title')" :show-close="false" :visible.sync="showHeaderColumnSort" width="630px">
+      <el-dialog class="bef-custom_dialog dialog-blue" :title="t('el.beescm.table.headerSort.title')" :show-close="false" :visible.sync="showHeaderColumnSort" width="630px">
         <section class="dialog-content">
           <div class="el-table-header__column_sort">
             <div class="sort-content gutter">
@@ -101,7 +101,7 @@
       handleConfirm() {
         this.showHeaderColumnSort = false;
         if (this.sortedColumns.length > 0) {
-          this.table.store.commit('setCustomColumns', this.sortedColumns);
+          this.table.store.commit('setCustomColumns', this.sortedColumns, false);
         }
       },
       // 取消

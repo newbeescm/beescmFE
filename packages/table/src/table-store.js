@@ -326,7 +326,7 @@ TableStore.prototype.mutations = {
     states.isAllSelected = value;
   }),
   // beescm
-  setCustomColumns(states, payload) {
+  setCustomColumns(states, payload, init = false) {
     const result = [];
     let _columns = [].concat(states._columns) || [];
     // 保留序号、复选框   	selection/index/expand
@@ -355,7 +355,9 @@ TableStore.prototype.mutations = {
     this.table.doLayout();
     this.table.$ready = true;
     // table重新渲染 结束
-    this.table.$emit('custom-columns-confirm', result);
+    if (!init) {
+      this.table.$emit('custom-columns-confirm', result);
+    }
   },
   // beescm
   clearCustomColumns(states, payload) {

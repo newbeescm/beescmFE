@@ -329,9 +329,12 @@
         default: false
       },
       // 高级功能选项
-      customOptions: {
-        type: Object
-      }
+      // customOptions: {
+      //   type: Array,
+      //   default: function () {
+      //     return []
+      //   }
+      // }
       // end
     },
 
@@ -467,8 +470,8 @@
         }
       },
 
-      setCustomColumns(options) {
-        this.store.commit('setCustomColumns', options);
+      setCustomColumns(options, init) {
+        this.store.commit('setCustomColumns', options, init);
       }
     },
 
