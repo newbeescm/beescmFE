@@ -327,15 +327,7 @@
       showCustomOptions: {
         type: Boolean,
         default: false
-      },
-      // 高级功能选项
-      // customOptions: {
-      //   type: Array,
-      //   default: function () {
-      //     return []
-      //   }
-      // }
-      // end
+      }
     },
 
     components: {
