@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import debounce from 'throttle-debounce/debounce';
 import merge from 'beescm-ui/src/utils/merge';
+import { hasClass, addClass, removeClass } from 'beescm-ui/src/utils/dom';
 import { orderBy, getColumnById, getRowIdentity } from './util';
 
 const sortData = (data, states) => {
@@ -141,6 +142,8 @@ TableStore.prototype.mutations = {
 
     this.updateCurrentRow();
 
+    const rowKey = states.rowKey;
+
     if (!states.reserveSelection) {
       if (dataInstanceChanged) {
         this.clearSelection();
@@ -149,7 +152,6 @@ TableStore.prototype.mutations = {
       }
       this.updateAllSelected();
     } else {
-      const rowKey = states.rowKey;
       if (rowKey) {
         const selection = states.selection;
         const selectedMap = getKeysMap(selection, rowKey);
@@ -171,6 +173,20 @@ TableStore.prototype.mutations = {
     const defaultExpandAll = states.defaultExpandAll;
     if (defaultExpandAll) {
       this.states.expandRows = (states.data || []).slice(0);
+    } else if (rowKey) {
+      // update expandRows to new rows according to rowKey
+      const ids = getKeysMap(this.states.expandRows, rowKey);
+      let expandRows = [];
+      for (const row of states.data) {
+        const rowId = getRowIdentity(row, rowKey);
+        if (ids[rowId]) {
+          expandRows.push(row);
+        }
+      }
+      this.states.expandRows = expandRows;
+    } else {
+      // clear the old rows
+      this.states.expandRows = [];
     }
 
     Vue.nextTick(() => this.table.updateScrollY());
@@ -178,6 +194,17 @@ TableStore.prototype.mutations = {
 
   changeSortCondition(states, options) {
     states.data = sortData((states.filteredData || states._data || []), states);
+
+    const el = this.table.$el;
+    if (el) {
+      const data = states.data;
+      const tr = el.querySelector('tbody').children;
+      const rows = [].filter.call(tr, row => hasClass(row, 'el-table__row'));
+      const row = rows[data.indexOf(states.currentRow)];
+
+      [].forEach.call(rows, row => removeClass(row, 'current-row'));
+      addClass(row, 'current-row');
+    }
 
     if (!options || !options.silent) {
       this.table.$emit('sort-change', {
@@ -188,6 +215,28 @@ TableStore.prototype.mutations = {
     }
 
     Vue.nextTick(() => this.table.updateScrollY());
+  },
+
+  sort(states, options) {
+    const { prop, order } = options;
+    if (prop) {
+      states.sortProp = prop;
+      states.sortOrder = order || 'ascending';
+      Vue.nextTick(() => {
+        for (let i = 0, length = states.columns.length; i < length; i++) {
+          let column = states.columns[i];
+          if (column.property === states.sortProp) {
+            column.order = states.sortOrder;
+            states.sortingColumn = column;
+            break;
+          }
+        }
+
+        if (states.sortingColumn) {
+          this.commit('changeSortCondition');
+        }
+      });
+    }
   },
 
   filterChange(states, options) {
@@ -454,7 +503,7 @@ TableStore.prototype.toggleRowExpansion = function(row, expanded) {
   const changed = toggleRowExpansion(this.states, row, expanded);
   if (changed) {
     this.table.$emit('expand-change', row, this.states.expandRows);
-    this.scheduleLayout(true);
+    this.scheduleLayout();
   }
 };
 
