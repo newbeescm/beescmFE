@@ -194,7 +194,7 @@ export default {
         if (!this.modalAppendToBody && this.appendToClass) {
           domByClass = document.body.querySelector(`.${this.appendToClass}`);
           if (domByClass) {
-            domByClass = domByClass.firstChild || dom;
+            domByClass = domByClass.firstChild.firstChild || dom;
           }
         }
         PopupManager.openModal(this._popupId, PopupManager.nextZIndex(), this.modalAppendToBody ? undefined : domByClass, props.modalClass, props.modalFade);
