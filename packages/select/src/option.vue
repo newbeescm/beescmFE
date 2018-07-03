@@ -10,7 +10,9 @@
       'hover': hover
     }">
     <slot>
-      <span>{{ currentLabel }}</span>
+        <!-- 增加复选展示（beescm） -->
+        <el-checkbox v-if="select.checkbox" :value="currentValue">{{ currentLabel }}</el-checkbox>
+        <span v-else>{{ currentLabel }}</span>
     </slot>
   </li>
 </template>

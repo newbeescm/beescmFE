@@ -9,6 +9,10 @@
       v-if="multiple"
       ref="tags"
       :style="{ 'max-width': inputWidth - 32 + 'px' }">
+      <!-- 增加复选展示（beescm） -->
+      <span v-if="checkbox" class="el-select__checkbox_value">
+        <span class="el-select__checkbox_tags" v-for="item in selected">{{ item.currentLabel }} , </span>
+      </span>
       <span v-if="collapseTags && selected.length">
         <el-tag
           :closable="!selectDisabled"
@@ -28,7 +32,7 @@
           <span class="el-select__tags-text">+ {{ selected.length - 1 }}</span>
         </el-tag>
       </span>
-      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags">
+      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags&&!checkbox">
         <el-tag
           v-for="item in selected"
           :key="getValueKey(item)"
@@ -252,7 +256,11 @@
       size: String,
       disabled: Boolean,
       clearable: Boolean,
-      filterable: Boolean,
+      // 默认可搜索（beescm）
+      filterable: {
+        type: Boolean,
+        default: true
+      },
       allowCreate: Boolean,
       loading: Boolean,
       popperClass: String,
@@ -288,6 +296,16 @@
       popperAppendToBody: {
         type: Boolean,
         default: true
+      },
+      // 多选形式为复选（beescm）
+      checkbox: {
+        type: Boolean,
+        default: false
+      },
+      // 下拉复选（beescm）
+      tree: {
+        type: Boolean,
+        default: false
       }
     },
 

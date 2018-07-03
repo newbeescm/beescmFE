@@ -18,6 +18,9 @@
         }, {
           value: '选项5',
           label: '北京烤鸭'
+        }, {
+          value: '选项6',
+          label: '小龙虾'
         }],
         options2: [{
           value: '选项1',
@@ -137,7 +140,113 @@
 
 当选项过多时，使用下拉菜单展示并选择内容。
 
-### 基础用法
+### 基础用法 [beescm-ui]
+#### 单选
+:::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
+```html
+<div class="beescm-ui">
+  <template>
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+
+    <el-select v-model="value" tree placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+  </template>
+</div>
+
+<script>
+  export default {
+    data() {
+      return {
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }, {
+          value: '选项6',
+          label: '自定义'
+        }],
+        value: ''
+      }
+    }
+  }
+</script>
+```
+:::
+
+#### 复选
+:::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
+```html
+  <div class="beescm-ui">
+    <template>
+      <el-select v-model="value5" multiple checkbox placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </template>
+  </div>
+
+  <script>
+    export default {
+      data() {
+        return {
+          options: [{
+            value: '选项1',
+            label: '黄金糕'
+          }, {
+            value: '选项2',
+            label: '双皮奶'
+          }, {
+            value: '选项3',
+            label: '蚵仔煎'
+          }, {
+            value: '选项4',
+            label: '龙须面'
+          }, {
+            value: '选项5',
+            label: '北京烤鸭'
+          }, {
+            value: '选项6',
+            label: '自定义'
+          }],
+          value5: [],
+        }
+      }
+    }
+  </script>
+```
+:::
+
+
+
+### 基础用法 [element-ui]
 
 适用广泛的基础单选
 :::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
@@ -658,6 +767,7 @@
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | multiple | 是否多选 | boolean | — | false |
+| checkbox | 多选形式为复选，需配合 `multiple` 使用 | boolean | — | false（beescm） |
 | disabled | 是否禁用 | boolean | — | false |
 | value-key | 作为 value 唯一标识的键名，绑定值为对象类型时必填 | string | — | value |
 | size | 输入框尺寸 | string | medium/small/mini | — |
@@ -667,7 +777,7 @@
 | name | select input 的 name 属性 | string | — | — |
 | auto-complete | select input 的 autocomplete 属性 | string | — | off |
 | placeholder | 占位符 | string | — | 请选择 |
-| filterable | 是否可搜索 | boolean | — | false |
+| filterable | 是否可搜索 | boolean | — | true（beescm） |
 | readonly | 选中后的输入框是否只读 | boolean    | — | true（beescm） |
 | allow-create | 是否允许用户创建新条目，需配合 `filterable` 使用 | boolean | — | false |
 | filter-method | 自定义搜索方法 | function | — | — |

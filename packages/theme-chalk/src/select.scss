@@ -7,7 +7,70 @@
 @import "option";
 @import "option-group";
 @import "scrollbar";
+@import "common/beescm-val";
 
+.beescm-ui {
+  @include b(select) {
+    .el-input__inner{
+      font-size:$--beescm-default-font-size;
+      height: $--beescm-input-height;
+      box-sizing: border-box;
+      color: $--beescm-text-default-color;
+      border-color: $--beescm-select-input-border-color;
+      padding:$--beescm-select-input-padding;
+      &:focus {
+        border-color: $--beescm-text-selected-color;
+      }
+    }
+    .el-select__checkbox_value{
+      padding-left:12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .el-select__checkbox_tags{
+      font-size: 12px;
+      color: #666666;
+    }
+  }
+}
+@include b(select-dropdown) {
+  &.beescm-ui{
+    .el-select-dropdown__item{
+      height: $--beescm-select-popper-li-height;
+      line-height: $--beescm-select-popper-li-height;
+      font-size:$--beescm-default-font-size;
+      color: $--beescm-text-default-color;
+      padding:$--beescm-select-popper-li-padding;
+      span{
+        line-height: $--beescm-select-popper-li-height;
+        font-size:$--beescm-default-font-size;
+      }
+      &.hover{
+        background-color: $--beescm-select-hover-background-color;
+      }
+      &.selected{
+        color: $--beescm-text-selected-color;
+        font-weight: $--beescm-select-selected-font-weight;
+      }
+    }
+    &.is-checkbox .el-select-dropdown__item.selected{
+      &::before{
+        position: absolute;
+        left: 20px;
+        font-family: 'element-icons';
+        content: "\E611";
+        font-size: 12px;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        z-index: 2;
+      }
+      &::after{
+        display: none;
+      }
+    }
+  }
+}
 @include b(select) {
   display: inline-block;
   position: relative;
