@@ -5,14 +5,10 @@
     @click.stop="toggleMenu"
     v-clickoutside="handleClose">
     <div
+      v-if="multiple && !checkbox"
       class="el-select__tags"
-      v-if="multiple"
       ref="tags"
       :style="{ 'max-width': inputWidth - 32 + 'px' }">
-      <!-- 增加复选展示（beescm） -->
-      <span v-if="checkbox" class="el-select__checkbox_value">
-        <span class="el-select__checkbox_tags" v-for="item in selected">{{ item.currentLabel }} , </span>
-      </span>
       <span v-if="collapseTags && selected.length">
         <el-tag
           :closable="!selectDisabled"
@@ -32,7 +28,7 @@
           <span class="el-select__tags-text">+ {{ selected.length - 1 }}</span>
         </el-tag>
       </span>
-      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags&&!checkbox">
+      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags">
         <el-tag
           v-for="item in selected"
           :key="getValueKey(item)"
@@ -68,8 +64,36 @@
         :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
         ref="input">
     </div>
+    <el-popover
+      v-show="checkbox"
+      class="el-checkbox-select__popover"
+      ref="popover"
+      placement="bottom-start"
+      :width="width"
+      v-model="checkboxVisible"
+      trigger="click">
+      <el-input
+        class="select-filter"
+        v-if="filterable"
+        :readonly="false"
+        placeholder="输入关键字进行过滤"
+        v-model="filterText">
+      </el-input>
+      <el-checkbox-group
+        :class="{'el-select__checkbox':checkbox}"
+        v-model="selected">
+        <el-checkbox v-for="option in selectData" :label="option[props.label]" :key="option[props.value]" :disabled="option[props.disabled]">
+          {{option[props.label]}}
+        </el-checkbox>
+      </el-checkbox-group>
+      <div class="footer-btn">
+        <el-button plain @click="cancel">取消</el-button>
+        <el-button plain @click="confirm">确定</el-button>
+      </div>
+    </el-popover>
     <!-- beescm readonly为确定下拉搜索选中后是否可输入-->
     <el-input
+      v-popover:popover
       ref="reference"
       v-model="selectedLabel"
       type="text"
@@ -100,6 +124,7 @@
     </el-input>
     <transition
       name="el-zoom-in-top"
+      v-if="!checkbox"
       @before-enter="handleMenuEnter"
       @after-leave="doDestroy">
       <el-select-menu
@@ -256,11 +281,7 @@
       size: String,
       disabled: Boolean,
       clearable: Boolean,
-      // 默认可搜索（beescm）
-      filterable: {
-        type: Boolean,
-        default: true
-      },
+      filterable: Boolean,
       allowCreate: Boolean,
       loading: Boolean,
       popperClass: String,
@@ -302,11 +323,17 @@
         type: Boolean,
         default: false
       },
-      // 下拉复选（beescm）
-      tree: {
-        type: Boolean,
-        default: false
+      data: Array,
+      width: {
+        type: String,
+        default: '240'
+      },
+      props: {
+        label: 'label',
+        value: 'value',
+        disabled: 'disabled'
       }
+      // -------------------
     },
 
     data() {
@@ -328,7 +355,13 @@
         query: '',
         previousQuery: null,
         inputHovering: false,
-        currentPlaceholder: ''
+        currentPlaceholder: '',
+        // beescm复选增加属性
+        checkboxVisible: false,
+        filterText: '',
+        selectData: [],
+        oldSelected: this.multiple ? [] : {}
+        // ------------
       };
     },
 
@@ -398,7 +431,9 @@
           if (this.filterable) {
             this.query = this.remote ? '' : this.selectedLabel;
             this.handleQueryChange(this.query);
-            if (this.multiple) {
+            // beescm--------------
+            if (this.multiple && !this.checkbox) {
+              // -------------------
               this.$refs.input.focus();
             } else {
               if (!this.remote) {
@@ -424,10 +459,40 @@
         if (this.defaultFirstOption && (this.filterable || this.remote) && this.filteredOptionsCount) {
           this.checkDefaultFirstOption();
         }
+      },
+
+      // beescm-----------------------
+      filterText(val) {
+        this.selectData = this.data.filter(item => item[this.props.label].includes(val));
+      },
+
+      // beescm-----------------------
+      checkboxVisible(val) {
+        if (!val) {
+          this.filterText = '';
+          if (JSON.stringify(this.oldSelected) !== JSON.stringify(this.selected)) {
+            this.selected = this.oldSelected;
+          }
+        }
       }
     },
 
     methods: {
+      // beescm-----------------------
+      cancel() {
+        this.checkboxVisible = false;
+      },
+
+      // beescm-----------------------
+      confirm() {
+        this.selectedLabel = '';
+        this.selected.forEach(item => {
+          this.selectedLabel += `${item} , `;
+        });
+        this.oldSelected = this.selected;
+        this.cancel();
+      },
+
       handleQueryChange(val) {
         if (this.previousQuery === val) return;
         if (
@@ -442,7 +507,9 @@
           if (this.visible) this.broadcast('ElSelectDropdown', 'updatePopper');
         });
         this.hoverIndex = -1;
-        if (this.multiple && this.filterable) {
+        // beescm-----------------------
+        if (this.multiple && this.filterable && !this.checkbox) {
+          // --------------------------
           const length = this.$refs.input.value.length * 15 + 20;
           this.inputLength = this.collapseTags ? Math.min(50, length) : length;
           this.managePlaceholder();
@@ -612,7 +679,9 @@
       },
 
       resetInputHeight() {
-        if (this.collapseTags && !this.filterable) return;
+        // beescm-----------------------
+        if (this.collapseTags && !this.filterable || this.checkbox) return;
+        // -----------------------
         this.$nextTick(() => {
           if (!this.$refs.reference) return;
           let inputChildNodes = this.$refs.reference.$el.childNodes;
@@ -676,7 +745,11 @@
 
       setSoftFocus() {
         this.softFocus = true;
-        (this.$refs.input || this.$refs.reference).focus();
+        // beescm-----------------------
+        if (!this.checkbox) {
+          // -----------------------
+          (this.$refs.input || this.$refs.reference).focus();
+        }
       },
 
       getValueIndex(arr = [], value) {
@@ -698,7 +771,9 @@
       },
 
       toggleMenu() {
-        if (!this.selectDisabled) {
+        // beescm-----------------------
+        if (!this.selectDisabled && !this.checkbox) {
+          // -----------------------
           this.visible = !this.visible;
           if (this.visible) {
             (this.$refs.input || this.$refs.reference).focus();
@@ -752,7 +827,11 @@
       },
 
       resetInputWidth() {
-        this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;
+        // beescm-----------------------
+        if (this.checkbox) return;
+        if (this.$refs.reference && this.$refs.reference.$el) {
+          this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;
+        }
       },
 
       handleResize() {
@@ -820,6 +899,9 @@
     },
 
     mounted() {
+      // beescm------------------
+      this.selectData = this.data;
+      // -----------------------
       if (this.multiple && Array.isArray(this.value) && this.value.length > 0) {
         this.currentPlaceholder = '';
       }

@@ -1,7 +1,11 @@
 /* Colors
 -------------------------- */
+$--beescm-white-color: #ffffff !default;
 $--beescm-text-default-color: #666666 !default;
 $--beescm-text-selected-color: #5db5ef !default;
+$--beescm-border-default-color: #cccccc !default;
+$--beescm-border-selected-color: #61b6ed !default;
+
 
 /* Fonts
 -------------------------- */
@@ -9,8 +13,8 @@ $--beescm-default-font-size: 12px !default;
 
 /* Heights
 -------------------------- */
-$--beescm-input-height: 30px !important;
-$--beescm-select-popper-li-height: 26px !important;
+$--beescm-input-height: 30px !default;
+$--beescm-select-popper-li-height: 26px !default;
 
 /* Select
 -------------------------- */
@@ -19,7 +23,27 @@ $--beescm-select-input-padding: 0 12px !default;
 $--beescm-select-hover-background-color: #f4f6f9 !default;
 $--beescm-select-selected-font-weight: normal !default;
 $--beescm-select-popper-li-padding: 0 18px !default;
+$--beescm-select-footer-btn-border: 1px solid #c0c4cc !default;
+$--beescm-select-footer-btn-padding: 10px !default;
+$--beescm-select-footer-btn-min-width: 48px !default;
+$--beescm-select-footer-btn-height: 22px !default;
+$--beescm-select-selected-background-color: #f5f7fa !default;
+$--beescm-select-checkbox-margin-left: 16px !default;
 
-/* popper
+/* Popper
 -------------------------- */
 $--beescm-popper-margin: 2px !default;
+
+/* Button
+-------------------------- */
+$--beescm-button-font-size: 12px !default;
+$--beescm-button-padding-vertical:0 !default;
+$--beescm-button-padding-horizontal:0 !default;
+$--beescm-button-border-radius: 2;
+$--beescm-button-text-default-color: #333333 !default;
+$--beescm-button-color-primary-hover: #28a7e1 !default;
+$--beescm-button-primary-fill: #5db5ef !default;
+$--beescm-button-primary-border: none;
+$--beescm-button-plain-primary-fill:#f7fcff !default;
+$--beescm-button-min-width: 68px !default;
+$--beescm-button-margin-left: 10px !default;

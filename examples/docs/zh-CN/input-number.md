@@ -97,34 +97,6 @@
 ```
 :::
 
-### 尺寸
-
-额外提供了 `medium`、`small`、`mini` 三种尺寸的数字输入框
-
-:::demo
-
-```html
-<template>
-  <el-input-number v-model="num4"></el-input-number>
-  <el-input-number size="medium" v-model="num5"></el-input-number>
-  <el-input-number size="small" v-model="num6"></el-input-number>
-  <el-input-number size="mini" v-model="num7"></el-input-number>
-</template>
-<script>
-  export default {
-    data() {
-      return {
-        num4: 1,
-        num5: 1,
-        num6: 1,
-        num7: 1
-      }
-    }
-  };
-</script>
-```
-:::
-
 ### 按钮位置
 
 :::demo 设置 `controls-position` 属性可以控制按钮位置。

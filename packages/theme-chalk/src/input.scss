@@ -1,5 +1,6 @@
 @import "mixins/mixins";
 @import "common/var";
+@import "common/beescm-val";
 
 @include b(textarea) {
   display: inline-block;
@@ -52,7 +53,7 @@
 
 @include b(input) {
   position: relative;
-  font-size: $--font-size-base;
+  font-size: $--beescm-default-font-size;
   display: inline-block;
   width: 100%;
   @include scroll-bar;
@@ -75,14 +76,15 @@
     background-image: none;
     border-radius: $--input-border-radius;
     border: $--input-border;
+    border-color: $--beescm-select-input-border-color;
     box-sizing: border-box;
-    color: $--input-color;
+    color: $--beescm-text-default-color;
     display: inline-block;
     font-size: inherit;
-    height: $--input-height;
+    height: $--beescm-input-height;
     line-height: $--input-height;
     outline: none;
-    padding: 0 15px;
+    padding: $--beescm-select-input-padding;
     transition: $--border-transition-base;
     width: 100%;
 
@@ -96,7 +98,7 @@
 
     &:focus {
       outline: none;
-      border-color: $--input-focus-border;
+      border-color: $--beescm-text-selected-color;
     }
   }
 
@@ -130,7 +132,7 @@
     width: 25px;
     text-align: center;
     transition: all .3s;
-    line-height: $--input-height;
+    line-height: $--beescm-input-height;
 
     &:after {
       content: '';
@@ -185,12 +187,12 @@
     font-size: $--input-medium-font-size;
 
     @include e(inner) {
-      height: $--input-medium-height;
-      line-height: $--input-medium-height;
+      height: $--beescm-input-height;
+      line-height: $--beescm-input-height;
     }
 
     .el-input__icon {
-      line-height: $--input-medium-height;
+      line-height: $--beescm-input-height;
     }
   }
   @include m(small) {
@@ -202,7 +204,7 @@
     }
 
     .el-input__icon {
-      line-height: $--input-small-height;
+      line-height: $--beescm-input-height;
     }
   }
   @include m(mini) {
@@ -214,7 +216,7 @@
     }
 
     .el-input__icon {
-      line-height: $--input-mini-height;
+      line-height: $--beescm-input-height;
     }
   }
 }

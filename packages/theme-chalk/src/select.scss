@@ -8,73 +8,15 @@
 @import "option-group";
 @import "scrollbar";
 @import "common/beescm-val";
+@import "popover";
 
-.beescm-ui {
-  @include b(select) {
-    .el-input__inner{
-      font-size:$--beescm-default-font-size;
-      height: $--beescm-input-height;
-      box-sizing: border-box;
-      color: $--beescm-text-default-color;
-      border-color: $--beescm-select-input-border-color;
-      padding:$--beescm-select-input-padding;
-      &:focus {
-        border-color: $--beescm-text-selected-color;
-      }
-    }
-    .el-select__checkbox_value{
-      padding-left:12px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .el-select__checkbox_tags{
-      font-size: 12px;
-      color: #666666;
-    }
-  }
-}
-@include b(select-dropdown) {
-  &.beescm-ui{
-    .el-select-dropdown__item{
-      height: $--beescm-select-popper-li-height;
-      line-height: $--beescm-select-popper-li-height;
-      font-size:$--beescm-default-font-size;
-      color: $--beescm-text-default-color;
-      padding:$--beescm-select-popper-li-padding;
-      span{
-        line-height: $--beescm-select-popper-li-height;
-        font-size:$--beescm-default-font-size;
-      }
-      &.hover{
-        background-color: $--beescm-select-hover-background-color;
-      }
-      &.selected{
-        color: $--beescm-text-selected-color;
-        font-weight: $--beescm-select-selected-font-weight;
-      }
-    }
-    &.is-checkbox .el-select-dropdown__item.selected{
-      &::before{
-        position: absolute;
-        left: 20px;
-        font-family: 'element-icons';
-        content: "\E611";
-        font-size: 12px;
-        font-weight: bold;
-        -webkit-font-smoothing: antialiased;
-        z-index: 2;
-      }
-      &::after{
-        display: none;
-      }
-    }
-  }
-}
 @include b(select) {
   display: inline-block;
   position: relative;
 
+  .el-select__checkbox_value{
+    display: inline-flex;
+  }
   &:hover {
     .el-input__inner {
       border-color: $--select-border-color-hover;
@@ -84,6 +26,9 @@
   .el-input__inner {
     cursor: pointer;
     padding-right: 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &:focus {
       border-color: $--select-input-focus-background;
@@ -140,7 +85,7 @@
     border: none;
     outline: none;
     padding: 0;
-    margin-left: 15px;
+    margin-left: 0;
     color: $--select-multiple-input-color;
     font-size: $--select-font-size;
     appearance: none;
@@ -176,6 +121,12 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    font-size: $--beescm-default-font-size;
+    padding: 0;
+    color: $--beescm-text-default-color;
+    &.el-select-checkbox__tags{
+      padding: $--beescm-select-input-padding;
+    }
   }
 
   .el-tag__close {
@@ -201,6 +152,43 @@
       &::before {
         display: block;
         transform: translate(0, .5px);
+      }
+    }
+  }
+}
+
+@include b(popper){
+  .select-filter{
+    margin:8px 0;
+    text-align: center;
+    .el-input__inner{
+      width: 95%;
+    }
+  }
+  .el-tree-select__checkbox,.el-select__checkbox{
+    max-height: 200px;
+    overflow: auto;
+    + .footer-btn{
+      border-top: $--beescm-select-footer-btn-border;
+      text-align: right;
+      height: $--beescm-input-height;
+      line-height: $--beescm-input-height;
+      padding-right: $--beescm-select-footer-btn-padding;
+      .el-button{
+        min-width: $--beescm-select-footer-btn-min-width;
+        height: $--beescm-select-footer-btn-height;
+      }
+    }
+  }
+  .el-select__checkbox{
+    .el-checkbox{
+      display: block;
+      margin:0;
+      padding-left: $--beescm-select-checkbox-margin-left;
+      height: $--beescm-select-popper-li-height;
+      line-height: $--beescm-select-popper-li-height;
+      &:hover{
+        background-color: $--beescm-select-selected-background-color;
       }
     }
   }

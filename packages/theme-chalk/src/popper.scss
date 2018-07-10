@@ -2,17 +2,7 @@
 @import "common/var";
 @import "common/beescm-val";
 
-
 @include b(popper) {
-  
-  &.beescm-ui {
-    &[x-placement^="top"] {
-      margin-bottom: $--beescm-popper-margin;
-    }
-    &[x-placement^="bottom"] {
-      margin-top: $--beescm-popper-margin;
-    }
-  }
 
   .popper__arrow,
   .popper__arrow::after {
@@ -35,7 +25,7 @@
   }
 
   &[x-placement^="top"] {
-    margin-bottom: #{$--popover-arrow-size + 6};
+    margin-bottom: $--beescm-popper-margin;
   }
 
   &[x-placement^="top"] .popper__arrow {
@@ -54,7 +44,7 @@
   }
 
   &[x-placement^="bottom"] {
-    margin-top: #{$--popover-arrow-size + 6};
+    margin-top: $--beescm-popper-margin;
   }
 
   &[x-placement^="bottom"] .popper__arrow {
@@ -110,5 +100,4 @@
       border-left-color: $--popover-fill;
     }
   }
-
 }

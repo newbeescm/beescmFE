@@ -49,12 +49,12 @@
 </div>
 
 <div>
-  <el-button round>圆形按钮</el-button>
-  <el-button type="primary" round>主要按钮</el-button>
-  <el-button type="success" round>成功按钮</el-button>
-  <el-button type="info" round>信息按钮</el-button>
-  <el-button type="warning" round>警告按钮</el-button>
-  <el-button type="danger" round>危险按钮</el-button>
+  <el-button round size="mini">圆形按钮</el-button>
+  <el-button type="primary" size="mini" round>主要按钮</el-button>
+  <el-button type="success" size="mini" round>成功按钮</el-button>
+  <el-button type="info" size="mini" round>信息按钮</el-button>
+  <el-button type="warning" size="mini" round>警告按钮</el-button>
+  <el-button type="danger" size="mini" round>危险按钮</el-button>
 </div>
 ```
 :::

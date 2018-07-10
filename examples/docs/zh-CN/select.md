@@ -1,7 +1,12 @@
 <script>
+const defaultProps = {
+    label: 'label',
+    value: 'value'
+  };
   export default {
     data() {
       return {
+        defaultProps,
         list: null,
         options: [{
           value: '选项1',
@@ -106,7 +111,47 @@
         value10: [],
         value11: [],
         loading: false,
-        states: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+        states: ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"],
+        data: [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        input: '',
       };
     },
     
@@ -140,119 +185,13 @@
 
 当选项过多时，使用下拉菜单展示并选择内容。
 
-### 基础用法 [beescm-ui]
-#### 单选
-:::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
-```html
-<div class="beescm-ui">
-  <template>
-    <el-select v-model="value" placeholder="请选择">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
-    </el-select>
-
-    <el-select v-model="value" tree placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-  </template>
-</div>
-
-<script>
-  export default {
-    data() {
-      return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }, {
-          value: '选项6',
-          label: '自定义'
-        }],
-        value: ''
-      }
-    }
-  }
-</script>
-```
-:::
-
-#### 复选
-:::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
-```html
-  <div class="beescm-ui">
-    <template>
-      <el-select v-model="value5" multiple checkbox placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-    </template>
-  </div>
-
-  <script>
-    export default {
-      data() {
-        return {
-          options: [{
-            value: '选项1',
-            label: '黄金糕'
-          }, {
-            value: '选项2',
-            label: '双皮奶'
-          }, {
-            value: '选项3',
-            label: '蚵仔煎'
-          }, {
-            value: '选项4',
-            label: '龙须面'
-          }, {
-            value: '选项5',
-            label: '北京烤鸭'
-          }, {
-            value: '选项6',
-            label: '自定义'
-          }],
-          value5: [],
-        }
-      }
-    }
-  </script>
-```
-:::
-
-
-
-### 基础用法 [element-ui]
+### 单选 [beescm]
 
 适用广泛的基础单选
 :::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
 ```html
 <template>
-  <el-select v-model="value" placeholder="请选择">
+  <el-select clearable v-model="value" placeholder="请选择">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -289,6 +228,50 @@
 </script>
 ```
 :::
+
+### 复选 [beescm]
+:::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
+```html
+  <template>
+    <el-select v-model="value5" multiple checkbox filterable :data="options" :props="defaultProps" placeholder="请选择">
+    </el-select>
+  </template>
+
+  <script>
+    export default {
+      data() {
+        return {
+          options: [{
+            value: '选项1',
+            label: '黄金糕'
+          }, {
+            value: '选项2',
+            label: '双皮奶'
+          }, {
+            value: '选项3',
+            label: '蚵仔煎'
+          }, {
+            value: '选项4',
+            label: '龙须面'
+          }, {
+            value: '选项5',
+            label: '北京烤鸭'
+          }, {
+            value: '选项6',
+            label: '自定义'
+          }],
+          value5: [],
+          defaultProps: {
+            label: 'label',
+            value: 'value'
+          }
+        }
+      }
+    }
+  </script>
+```
+:::
+
 
 ### 有禁用选项
 
@@ -791,6 +774,9 @@
 | reserve-keyword | 多选且可搜索时，是否在选中一个选项后保留当前的搜索关键词 | boolean | — | false |
 | default-first-option | 在输入框按下回车，选择第一个匹配项。需配合 `filterable` 或 `remote` 使用 | boolean | - | false |
 | popper-append-to-body | 是否将弹出框插入至 body 元素。在弹出框的定位出现问题时，可将该属性设置为 false | boolean | - | true |
+| data | 需配合 `checkbox` 使用,存放下拉条目的数组,options | Array | — | —（beescm） |
+| width | 需配合 `checkbox` 使用,下拉popover宽度 | string | — | 240（beescm） |
+| props | 需配合 `checkbox` 使用,配置选项，具体看下表 | object | — | —（beescm） |
 
 ### Select Events
 | 事件名称 | 说明 | 回调参数 |
@@ -801,6 +787,13 @@
 | clear | 可清空的单选模式下用户点击清空按钮时触发 | — |
 | blur | 当 input 失去焦点时触发 | (event: Event) |
 | focus | 当 input 获得焦点时触发 | (event: Event) |
+
+### props
+| 参数       | 说明                | 类型     | 可选值  | 默认值  |
+| -------- | ----------------- | ------ | ---- | ---- |
+| label    | 指定节点标签为节点对象的某个属性值 | string, function(data, node) | —    | —    |
+| value    | 指定节点标签为节点对象的某个属性值 | string, function(data, node) | —    | —    |
+| disabled | 指定节点选择框是否禁用为节点对象的某个属性值 | boolean, function(data, node) | —    | —    |
 
 ### Option Group Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |

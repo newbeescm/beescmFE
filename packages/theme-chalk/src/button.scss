@@ -3,16 +3,16 @@
 @import "mixins/button";
 @import "mixins/mixins";
 @import "mixins/utils";
+@import "common/beescm-val";
 
 @include b(button) {
   display: inline-block;
-  line-height: 1;
   white-space: nowrap;
   cursor: pointer;
   background: $--button-default-fill;
   border: $--border-base;
   border-color: $--button-default-border;
-  color: $--button-default-color;
+  color: $--beescm-text-default-color;
   -webkit-appearance: none;
   text-align: center;
   box-sizing: border-box;
@@ -20,23 +20,25 @@
   margin: 0;
   transition: .1s;
   font-weight: $--button-font-weight;
+  min-width: $--beescm-button-min-width;
+  height: $--beescm-select-popper-li-height;
+  line-height: 1;
   @include utils-user-select(none);
   & + .el-button {
-    margin-left: 10px;
+    margin-left: $--beescm-button-margin-left;
   }
 
-  @include button-size($--button-padding-vertical, $--button-padding-horizontal, $--button-font-size, $--button-border-radius);
+  @include button-size($--beescm-button-padding-vertical, $--beescm-button-padding-horizontal, $--beescm-default-font-size, $--button-border-radius);
 
   &:hover,
   &:focus {
-    color: $--color-primary;
-    border-color: $--color-primary-light-7;
-    background-color: $--color-primary-light-9;
+    color: $--beescm-white-color;
+    background-color: $--beescm-button-color-primary-hover;
   }
 
   &:active {
-    color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-    border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+    color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
+    border-color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
     outline: none;
   }
 
@@ -53,22 +55,23 @@
   @include when(plain) {
     &:hover,
     &:focus {
-      background: $--color-white;
-      border-color: $--color-primary;
-      color: $--color-primary;
+      background: $--beescm-button-plain-primary-fill;
+      border-color: $--beescm-button-color-primary-hover;
+      color: $--beescm-button-text-default-color;
     }
 
     &:active {
       background: $--color-white;
-      border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      border-color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
+      color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
       outline: none;
     }
   }
 
+
   @include when(active) {
-    color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-    border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+    color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
+    border-color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
   }
 
   @include when(disabled) {
@@ -118,7 +121,13 @@
     padding: 12px 23px;
   }
   @include m(primary) {
-    @include button-variant($--button-primary-color, $--button-primary-fill, $--button-primary-border);
+    //@include button-variant($--beescm-white-color, $--beescm-button-primary-fill, $--button-success-border);
+    background-color: $--beescm-button-primary-fill;
+    color: $--beescm-white-color;
+    border: transparent;
+    &:hover,&:focus{
+      background-color: $--beescm-button-color-primary-hover;
+    }
   }
   @include m(success) {
     @include button-variant($--button-success-color, $--button-success-fill, $--button-success-border);
@@ -143,19 +152,19 @@
   }
   @include m(text) {
     border-color: transparent;
-    color: $--color-primary;
+    color: $--beescm-text-selected-color;
     background: transparent;
     padding-left: 0;
     padding-right: 0;
 
     &:hover,
     &:focus {
-      color: mix($--color-white, $--color-primary, $--button-hover-tint-percent);
+      color: mix($--color-white, $--beescm-text-selected-color, $--button-hover-tint-percent);
       border-color: transparent;
       background-color: transparent;
     }
     &:active {
-      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      color: mix($--color-black, $--beescm-text-selected-color, $--button-active-shade-percent);
       border-color: transparent;
       background-color: transparent;
     }
@@ -165,6 +174,12 @@
     &.is-disabled:focus {
       border-color: transparent;
     }
+  }
+
+  &.el-button--primary.el-plain{
+    background: $--beescm-button-plain-primary-fill;
+    border-color: $--beescm-button-color-primary-hover;
+    color: $--beescm-button-text-default-color;
   }
 }
 
