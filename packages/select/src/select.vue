@@ -118,8 +118,8 @@
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false">
       <i slot="suffix"
-       :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"
-       @click="handleIconClick"
+         :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"
+         @click="handleIconClick"
       ></i>
     </el-input>
     <transition
@@ -470,9 +470,7 @@
       checkboxVisible(val) {
         if (!val) {
           this.filterText = '';
-          if (JSON.stringify(this.oldSelected) !== JSON.stringify(this.selected)) {
-            this.selected = this.oldSelected;
-          }
+          this.selected = this.oldSelected;
         }
       }
     },
@@ -773,6 +771,7 @@
       toggleMenu() {
         // beescm-----------------------
         if (!this.selectDisabled && !this.checkbox) {
+          this.checkboxVisible = false;
           // -----------------------
           this.visible = !this.visible;
           if (this.visible) {

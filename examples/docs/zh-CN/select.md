@@ -334,7 +334,7 @@ const defaultProps = {
     </el-option>
   </el-select>
 </template>
-  
+
 <script>
   export default {
     data() {
@@ -746,7 +746,7 @@ const defaultProps = {
 如果 Select 的绑定值为对象类型，请务必指定 `value-key` 作为它的唯一性标识。
 :::
 
-### Select Attributes 
+### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | multiple | 是否多选 | boolean | — | false |

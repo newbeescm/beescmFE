@@ -69,6 +69,7 @@ import Header from '../packages/header/index.js';
 import Aside from '../packages/aside/index.js';
 import Main from '../packages/main/index.js';
 import Footer from '../packages/footer/index.js';
+import TreeSelect from '../packages/tree-select/index.js';
 import locale from 'beescm-ui/src/locale';
 import CollapseTransition from 'beescm-ui/src/transitions/collapse-transition';
 
@@ -138,6 +139,7 @@ const components = [
   Aside,
   Main,
   Footer,
+  TreeSelect,
   CollapseTransition
 ];
 
@@ -171,7 +173,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = {
-  version: '2.3.3',
+  version: '2.3.6',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -244,7 +246,8 @@ module.exports = {
   Header,
   Aside,
   Main,
-  Footer
+  Footer,
+  TreeSelect
 };
 
 module.exports.default = module.exports;
