@@ -1,16 +1,18 @@
 <script>
-const defaultProps = {
+const defaultProps1 = {
     label: 'label',
-    value: 'value'
+    value: 'value',
+    disabled: 'disabled'
   };
   export default {
     data() {
       return {
-        defaultProps,
+        defaultProps1,
         list: null,
         options: [{
           value: '选项1',
-          label: '黄金糕'
+          label: '黄金糕',
+          disabled: true
         }, {
           value: '选项2',
           label: '双皮奶'
@@ -154,7 +156,7 @@ const defaultProps = {
         input: '',
       };
     },
-    
+
     mounted() {
       this.list = this.states.map(item => { return { value: item, label: item }; });
     },
@@ -233,7 +235,7 @@ const defaultProps = {
 :::demo `v-model`的值为当前被选中的`el-option`的 value 属性值
 ```html
   <template>
-    <el-select v-model="value5" multiple checkbox filterable :data="options" :props="defaultProps" placeholder="请选择">
+    <el-select v-model="value5" multiple checkbox filterable :data="options" :props="defaultProps1" placeholder="请选择">
     </el-select>
   </template>
 
@@ -243,7 +245,8 @@ const defaultProps = {
         return {
           options: [{
             value: '选项1',
-            label: '黄金糕'
+            label: '黄金糕',
+            disabled: true
           }, {
             value: '选项2',
             label: '双皮奶'
@@ -261,7 +264,7 @@ const defaultProps = {
             label: '自定义'
           }],
           value5: [],
-          defaultProps: {
+          defaultProps1: {
             label: 'label',
             value: 'value'
           }

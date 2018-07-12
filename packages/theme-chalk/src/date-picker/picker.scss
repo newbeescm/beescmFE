@@ -1,6 +1,7 @@
 @import "../mixins/mixins";
 @import "../common/var";
 @import "../common/transition";
+@import "../common/beescm-val";
 
 @include b(date-editor) {
   position: relative;
@@ -35,7 +36,7 @@
     margin-left: -5px;
     color: $--color-text-placeholder;
     float: left;
-    line-height: 32px;
+    line-height: #{$--beescm-input-height - 2};
   }
 
   .el-range-input {
@@ -48,7 +49,7 @@
     padding: 0;
     width: 39%;
     text-align: center;
-    font-size: $--font-size-base;
+    font-size: $--beescm-default-font-size;
     color: $--color-text-regular;
 
     &::placeholder {
@@ -62,8 +63,8 @@
     padding: 0 5px;
     margin: 0;
     text-align: center;
-    line-height: 32px;
-    font-size: 14px;
+    line-height: $--beescm-input-height;
+    font-size: $--beescm-default-font-size;
     width: 5%;
     color: $--color-text-primary;
   }
@@ -74,7 +75,7 @@
     width: 25px;
     display: inline-block;
     float: right;
-    line-height: 32px;
+    line-height: $--beescm-input-height;
   }
 }
 
@@ -82,7 +83,7 @@
   &.el-input__inner {
     display: inline-flex;
     align-items: center;
-    padding: 3px 10px;
+    padding: 0 10px;
   }
 
   .el-range-input {
@@ -99,21 +100,21 @@
 
   @include m(medium) {
     &.el-input__inner {
-      height: $--input-medium-height;
+      height: $--beescm-input-height;
     }
 
     .el-range-separator {
-      line-height: 28px;
-      font-size: $--input-medium-font-size;
+      line-height: $--beescm-input-height;
+      font-size: $--beescm-default-font-size;
     }
 
     .el-range-input {
-      font-size: $--input-medium-font-size;
+      font-size: $--beescm-default-font-size;
     }
 
     .el-range__icon,
     .el-range__close-icon {
-      line-height: 28px;
+      line-height: $--beescm-input-height;
     }
   }
 

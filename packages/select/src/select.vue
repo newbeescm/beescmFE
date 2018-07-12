@@ -81,8 +81,10 @@
       </el-input>
       <el-checkbox-group
         :class="{'el-select__checkbox':checkbox}"
-        v-model="selected">
-        <el-checkbox v-for="option in selectData" :label="option[props.label]" :key="option[props.value]" :disabled="option[props.disabled]">
+        v-model="selected"
+        @change="checkboxChange"
+      >
+        <el-checkbox v-for="option in selectData" :label="option[props.value]"  :key="option[props.value]" :disabled="option[props.disabled]">
           {{option[props.label]}}
         </el-checkbox>
       </el-checkbox-group>
@@ -360,7 +362,8 @@
         checkboxVisible: false,
         filterText: '',
         selectData: [],
-        oldSelected: this.multiple ? [] : {}
+        oldSelected: this.multiple ? [] : {},
+        checkboxSelected: []
         // ------------
       };
     },
@@ -476,6 +479,11 @@
     },
 
     methods: {
+
+      // beescm-----------------------
+      checkboxChange(selVal) {
+        this.checkboxSelected = selVal;
+      },
       // beescm-----------------------
       cancel() {
         this.checkboxVisible = false;
@@ -485,9 +493,12 @@
       confirm() {
         this.selectedLabel = '';
         this.selected.forEach(item => {
-          this.selectedLabel += `${item} , `;
+          const _itemObj = this.data.filter(obj=>obj[this.props.value] === item);
+          this.selectedLabel += `${_itemObj[0][this.props.label]} , `;
         });
         this.oldSelected = this.selected;
+        this.$emit('input', this.checkboxSelected);
+        this.emitChange(this.checkboxSelected);
         this.cancel();
       },
 

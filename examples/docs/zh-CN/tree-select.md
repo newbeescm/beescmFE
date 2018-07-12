@@ -547,6 +547,7 @@
       class="filter-tree"
       :show-filter="true"
       :data="data2"
+      node-key="id"
       :props="defaultProps"
       @node-click="handleNodeClick"
       :filter-node-method="filterNode"
@@ -557,6 +558,7 @@
       class="filter-tree"
       :show-filter="true"
       show-checkbox
+      node-key="id"
       :data="data2"
       :props="defaultProps"
       @node-click="handleNodeClick"

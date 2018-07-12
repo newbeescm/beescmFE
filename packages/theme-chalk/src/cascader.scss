@@ -6,8 +6,8 @@
 @include b(cascader) {
   display: inline-block;
   position: relative;
-  font-size: $--font-size-base;
-  line-height: $--input-height;
+  font-size: $--beescm-default-font-size;
+  line-height: $--beescm-input-height;
 
   .el-input,
   .el-input__inner {
@@ -113,15 +113,15 @@
   }
 
   @include e(item) {
-    font-size: $--select-font-size;
-    padding: 8px 20px;
+    font-size: $--beescm-default-font-size;
+    padding: 0 20px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: $--select-option-color;
-    height: $--select-option-height;
-    line-height: 1.5;
+    color: $--beescm-text-default-color;
+    height: $--beescm-select-popper-li-height;
+    line-height: $--beescm-select-popper-li-height;
     box-sizing: border-box;
     cursor: pointer;
     outline: none;
@@ -129,7 +129,7 @@
       &:after {
         font-family: 'element-icons';
         content: "\e604";
-        font-size: 14px;
+        font-size: $--beescm-default-font-size;
         color: rgb(191, 203, 217);
         position: absolute;
         right: 15px;
@@ -147,11 +147,11 @@
     }
 
     @include when(active) {
-      color: $--select-option-selected;
+      color: $--beescm-text-selected-color;
     }
 
     &:hover, &:focus:not(:active) {
-      background-color: $--select-option-hover-background;
+      background-color: $--beescm-select-hover-background-color;
     }
 
     &.selected {

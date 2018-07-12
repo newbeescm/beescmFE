@@ -82,7 +82,7 @@
     display: inline-block;
     font-size: inherit;
     height: $--beescm-input-height;
-    line-height: $--input-height;
+    line-height: $--beescm-input-height;
     outline: none;
     padding: $--beescm-select-input-padding;
     transition: $--border-transition-base;

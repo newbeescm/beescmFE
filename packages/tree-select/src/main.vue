@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import Emitter from 'beescm-ui/src/mixins/emitter';
   import ElTree from 'beescm-ui/packages/tree';
   import ElInput from 'beescm-ui/packages/input';
   import ElPopover from 'beescm-ui/packages/popover';
@@ -73,6 +74,20 @@
 
   export default {
     name: 'ElTreeSelect',
+
+    componentName: 'ElTreeSelect',
+
+    inject: {
+      elForm: {
+        default: ''
+      },
+
+      elFormItem: {
+        default: ''
+      }
+    },
+
+    mixins: [Emitter],
 
     components: {
       ElInput,
@@ -208,6 +223,9 @@
     methods: {
       confirm() {
         this.setSelectedLabel();
+        const checkedKeys = this.$refs.tree.getCheckedKeys(this.checkStrictly);
+        this.$emit('input', checkedKeys);
+        this.emitChange(checkedKeys);
         this.visible = false;
       },
 
@@ -226,6 +244,9 @@
         if (this.showCheckbox) return;
         this.selectedLabel = data[this.props.label];
         this.selectedObj = data;
+        const selectedKey = this.$refs.tree.getCurrentKey();
+        this.$emit('input', selectedKey);
+        this.emitChange(selectedKey);
         this.visible = false;
       },
 
