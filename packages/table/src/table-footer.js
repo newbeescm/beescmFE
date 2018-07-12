@@ -125,7 +125,10 @@ export default {
     },
 
     hasGutter() {
-      return !this.fixed && this.tableLayout.gutterWidth;
+      // niugm modify @ 20180706
+      // 表头排序后，默认铺满
+      // return !this.fixed && this.tableLayout.gutterWidth;
+      return false;
     }
   },
 
