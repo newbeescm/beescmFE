@@ -1,6 +1,7 @@
 @import "../mixins/mixins";
 @import "../common/var";
 @import "../common/transition";
+@import "../common/beescm-val";
 
 @include b(date-editor) {
   position: relative;
