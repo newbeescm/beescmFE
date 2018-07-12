@@ -30,7 +30,7 @@
       </table-header>
       <!--add by niugm for headerColumnSort-->
       <div v-if="showCustomOptions" class="el-table__common-options">
-        <custom-panel :store="store"></custom-panel>
+        <custom-panel :store="store" :custom-icons="customIcons"></custom-panel>
       </div>
       <!--headerColumnSort end-->
     </div>
@@ -326,6 +326,22 @@
       showCustomOptions: {
         type: Boolean,
         default: false
+      },
+
+      // niugm add 自定义icon
+      customIcons: {
+        type: Object,
+        default: function () {
+          return {
+            'headerSort_Entry' : 'el-icon-menu entry-icon',
+            'headerSort_Fix': 'el-icon-star-off',
+            'headerSort_Up': 'el-icon-arrow-up',
+            'headerSort_Down': 'el-icon-arrow-down',
+            'headerSort_Top': 'el-icon-upload2',
+            'headerSort_Bottom': 'el-icon-download',
+            'headerSort_Close': 'el-icon-close'
+          }
+        }
       }
     },
 

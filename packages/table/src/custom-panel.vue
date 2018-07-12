@@ -12,7 +12,7 @@
           <!--<div @click="handleShowHeaderColumnSort">{{ t('el.beescm.table.headerSort.title') }}</div>-->
           <!--<span class="entry-icon" slot="reference"><i class="el-icon-menu"></i></span>-->
       <!--</el-popover>-->
-      <div><i class="el-icon-menu entry-icon" :title="t('el.beescm.table.headerSort.title')" @click="handleShowHeaderColumnSort"></i></div>
+      <div><i :class="customIcons['headerSort_Entry']" :title="t('el.beescm.table.headerSort.title')" @click="handleShowHeaderColumnSort"></i></div>
       <el-dialog class="bef-custom_dialog dialog-blue" :title="t('el.beescm.table.headerSort.title')" :show-close="false" :visible.sync="showHeaderColumnSort" width="630px">
         <section class="dialog-content">
           <div class="el-table-header__column_sort">
@@ -33,17 +33,17 @@
                   <li v-for="(column, index) in sortedColumns" :class="{ fixed: column.fixed }" @mouseenter="($event)=>{ handleMouseEnter($event, column) }" @mouseleave="handleMouseLeave" :key="index">
                     {{ index+1 }} {{ column.label }}
                     <div v-show="sortedColumnHover == column && !column.fixed" class="actions">
-                      <i @click="handleColumnFixed(true, index, column)" class="el-icon-star-off"></i>
-                      <i @click="handleColumnMove('up', index, column)" :style="{ visibility: index === 0 ? 'hidden' : 'visible' }" class="el-icon-arrow-up"></i>
-                      <i @click="handleColumnMove('down', index, column)" :style="{ visibility: index === sortedColumns.length - 1 ? 'hidden' : 'visible' }" class="el-icon-arrow-down"></i>
-                      <i @click="handleColumnMove('top', index, column)" :style="{ visibility: index === 0 ? 'hidden' : 'visible' }" class="el-icon-upload2"></i>
-                      <i @click="handleColumnMove('bottom', index, column)" :style="{ visibility: index === sortedColumns.length - 1 ? 'hidden' : 'visible' }" class="el-icon-download"></i>
+                      <i @click="handleColumnFixed(true, index, column)" :class="customIcons['headerSort_Fix']"></i>
+                      <i @click="handleColumnMove('up', index, column)" :style="{ visibility: index - fixedColumnsCount === 0 ? 'hidden' : 'visible' }" :class="customIcons['headerSort_Up']"></i>
+                      <i @click="handleColumnMove('down', index, column)" :style="{ visibility: index === sortedColumns.length - 1 ? 'hidden' : 'visible' }" :class="customIcons['headerSort_Down']"></i>
+                      <i @click="handleColumnMove('top', index, column)" :style="{ visibility: index - fixedColumnsCount === 0 ? 'hidden' : 'visible' }" :class="customIcons['headerSort_Top']"></i>
+                      <i @click="handleColumnMove('bottom', index, column)" :style="{ visibility: index === sortedColumns.length - 1 ? 'hidden' : 'visible' }" :class="customIcons['headerSort_Bottom']"></i>
                       <span class="remove">
-                        <i @click="handleColumnRemove(index, column)" class="el-icon-close"></i>
+                        <i @click="handleColumnRemove(index, column)" :class="customIcons['headerSort_Close']"></i>
                       </span>
                     </div>
                     <div v-show="column.fixed" class="actions" style="width: 34px">
-                      <i @click="handleColumnFixed(false, index, column)" class="el-icon-star-on"></i>
+                      <i @click="handleColumnFixed(false, index, column)" :class="customIcons['headerSort_Fix']"></i>
                     </div>
                   </li>
                 </ul>
@@ -93,7 +93,8 @@
     props: {
       store: {
         required: true
-      }
+      },
+      customIcons: [ Object ]
     },
 
     methods: {
@@ -169,8 +170,16 @@
           Vue.set(this.sortedColumns, index, __temp);
           Vue.set(this.sortedColumns, _index, _temp);
         } else if (direction === 'top') {
+          // 置顶操作，目标要在锁定列下方
           this.sortedColumns.splice(index, 1);
-          this.sortedColumns.unshift(_temp);
+          let _fixedColumns = this.sortedColumns.filter((column)=>{
+            return column.fixed === true || column.fixed === 'left';
+          });
+          let _leafColumns = this.sortedColumns.filter((column)=>{
+            return column.fixed === false;
+          });
+          _leafColumns.unshift(_temp);
+          this.sortedColumns = [].concat(_fixedColumns).concat(_leafColumns);
         } else if (direction === 'bottom') {
           this.sortedColumns.splice(index, 1);
           this.sortedColumns.push(_temp);
@@ -206,6 +215,12 @@
       },
       customColumns() {
         return this.store.states.customColumns;
+      },
+      fixedColumnsCount() {
+        let fixedColumns = this.sortedColumns.filter((column)=>{
+          return column.fixed;
+        })
+        return fixedColumns.length;
       }
     },
 

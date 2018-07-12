@@ -1,20 +1,20 @@
 {
   "zh-CN": {
-    "home": "Element - 网站快速成型工具",
-    "guide": "指南 | Element",
-    "component": "组件 | Element",
-    "resource": "资源 | Element"
+    "home": "蜂网PC前端公共组件",
+    "guide": "指南",
+    "component": "蜂网PC前端公共组件",
+    "resource": "资源"
   },
   "en-US": {
     "home": "Element - A Desktop UI Toolkit for Web",
-    "guide": "Guide | Element",
-    "component": "Component | Element",
-    "resource": "Resource | Element"
+    "guide": "Guide",
+    "component": "Component",
+    "resource": "Resource"
   },
   "es": {
     "home": "Element - Un kit de interfaz de usuario para la web",
-    "guide": "Guía | Element",
-    "component": "Componentes | Element",
-    "resource": "Recursos | Element"
+    "guide": "Guía",
+    "component": "Componentes",
+    "resource": "Recursos"
   }
 }
