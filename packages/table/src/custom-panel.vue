@@ -43,7 +43,7 @@
                       </span>
                     </div>
                     <div v-show="column.fixed" class="actions" style="width: 34px">
-                      <i @click="handleColumnFixed(false, index, column)" :class="customIcons['headerSort_Fix']"></i>
+                      <i @click="handleColumnFixed(false, index, column)" :class="customIcons['headerSort_UnFix']"></i>
                     </div>
                   </li>
                 </ul>

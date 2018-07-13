@@ -335,6 +335,7 @@
           return {
             'headerSort_Entry' : 'el-icon-menu entry-icon',
             'headerSort_Fix': 'el-icon-star-off',
+            'headerSort_UnFix': 'el-icon-star-on',
             'headerSort_Up': 'el-icon-arrow-up',
             'headerSort_Down': 'el-icon-arrow-down',
             'headerSort_Top': 'el-icon-upload2',
