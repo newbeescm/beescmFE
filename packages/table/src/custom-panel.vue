@@ -20,7 +20,7 @@
               <div class="head">{{ t('el.beescm.table.headerSort.leftTab') }}</div>
               <div class="body">
                 <ul>
-                  <li v-for="(column, index) in originDefaultColumns" v-if="column.type!=='selection' && column.type!=='index' && column.type!=='expand'" >
+                  <li v-for="(column, index) in originDefaultColumns" v-if="column.type!=='selection' && column.type!=='index' && column.type!=='expand'" :key="index">
                     <el-checkbox v-model="originCheckedColumns[column.property]" @change="(checked)=>{ handleCheck(checked, column) }" :key="column.prop" :label="column.label"><span style="font-size: 12px">{{ column.label }}</span></el-checkbox>
                   </li>
                 </ul>
@@ -219,7 +219,7 @@
       fixedColumnsCount() {
         let fixedColumns = this.sortedColumns.filter((column)=>{
           return column.fixed;
-        })
+        });
         return fixedColumns.length;
       }
     },

@@ -331,9 +331,9 @@
       // niugm add 自定义icon
       customIcons: {
         type: Object,
-        default: function () {
+        default: function() {
           return {
-            'headerSort_Entry' : 'el-icon-menu entry-icon',
+            'headerSort_Entry': 'el-icon-menu entry-icon',
             'headerSort_Fix': 'el-icon-star-off',
             'headerSort_UnFix': 'el-icon-star-on',
             'headerSort_Up': 'el-icon-arrow-up',
@@ -341,7 +341,7 @@
             'headerSort_Top': 'el-icon-upload2',
             'headerSort_Bottom': 'el-icon-download',
             'headerSort_Close': 'el-icon-close'
-          }
+          };
         }
       }
     },
