@@ -59,6 +59,7 @@
           :render-content="renderContent"
           v-for="child in node.childNodes"
           :render-after-expand="renderAfterExpand"
+          :child-not-emit-parent="childNotEmitParent"
           :key="getNodeKey(child)"
           :node="child"
           @node-expand="handleChildNodeExpand">

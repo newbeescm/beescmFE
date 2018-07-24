@@ -368,6 +368,7 @@
         data4: JSON.parse(JSON.stringify(data2)),
         data5: JSON.parse(JSON.stringify(data2)),
         data6,
+        data7: JSON.parse(JSON.stringify(data2)),
         regions,
         defaultProps,
         props,
@@ -1164,6 +1165,46 @@
 ```
 :::
 
+
+### 禁用多选子传父
+
+（newbeescm新增）多选状态下，点击父级选框会影响子级。但是勾选子级选框不会影响父级。
+
+:::demo newbeescm新增，Tms组件功能需求。
+```html
+<el-tree
+  :data="data7"
+  :child-not-emit-parent="true"
+  show-checkbox
+  default-expand-all
+  :props="defaultProps"
+  @check-change="handleCheckChange">
+</el-tree>
+
+<script>
+  export default {
+    data() {
+      return {
+        props: {
+          label: 'label',
+          children: 'children'
+        },
+        count: 1
+      };
+    },
+    methods: {
+      handleCheckChange(data, checked, indeterminate) {
+        console.log(data, checked, indeterminate);
+      },
+      handleNodeClick(data) {
+        console.log(data);
+      },
+    }
+  };
+</script>
+```
+:::
+
 ### Attributes
 | 参数                  | 说明                                               | 类型                        | 可选值  | 默认值   |
 | --------------------- | ---------------------------------------- | --------------------------- | ---- | ----- |
@@ -1189,6 +1230,7 @@
 | draggable             | 是否开启拖拽节点功能                                   | boolean            | —    | false |
 | allow-drag            | 判断节点能否被拖拽                  | Function(Node)  | —  | —  |
 | allow-drop            | 拖拽时判定位置能否被放置             | Function(fromNode, toNode)  | —    | —     |
+| child-not-emit-parent | 禁用子级选中影响父级选中状态         | boolean                      | -    | false     |
 
 ### props
 | 参数       | 说明                | 类型     | 可选值  | 默认值  |

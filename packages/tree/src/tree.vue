@@ -66,7 +66,7 @@
       // 子是否传父 tms业务需求
       childNotEmitParent: {
         type: Boolean,
-        default: true
+        default: false
       },
       // leo.shi end
       emptyText: {
