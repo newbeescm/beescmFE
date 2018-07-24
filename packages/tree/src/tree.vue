@@ -8,15 +8,18 @@
     }"
     role="tree"
   >
+    <!-- leo.shi 2018年7月24日11:07:25 start -->
     <el-tree-node
       v-for="child in root.childNodes"
       :node="child"
       :props="props"
       :render-after-expand="renderAfterExpand"
+      :child-not-emit-parent="childNotEmitParent"
       :key="getNodeKey(child)"
       :render-content="renderContent"
       @node-expand="handleNodeExpand">
     </el-tree-node>
+    <!-- end -->
     <div class="el-tree__empty-block" v-if="!root.childNodes || root.childNodes.length === 0">
       <span class="el-tree__empty-text">{{ emptyText }}</span>
     </div>
@@ -59,6 +62,13 @@
       data: {
         type: Array
       },
+      // leo.shi 2018年7月24日11:07:25 start
+      // 子是否传父 tms业务需求
+      childNotEmitParent: {
+        type: Boolean,
+        default: true
+      },
+      // leo.shi end
       emptyText: {
         type: String,
         default() {
@@ -67,7 +77,7 @@
       },
       renderAfterExpand: {
         type: Boolean,
-        default: true
+        default: false
       },
       nodeKey: String,
       checkStrictly: Boolean,

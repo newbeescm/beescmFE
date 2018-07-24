@@ -92,7 +92,14 @@
       renderAfterExpand: {
         type: Boolean,
         default: true
+      },
+      // leo.shi 2018年7月24日11:07:25 start
+      // 子是否传父 tms业务需求
+      childNotEmitParent: {
+        type: Boolean,
+        default: false
       }
+      // leo.shi end
     },
 
     components: {
@@ -192,7 +199,12 @@
       },
 
       handleCheckChange(value, ev) {
-        this.node.setChecked(ev.target.checked, !this.tree.checkStrictly);
+        // leo.shi 2018年7月24日11:07:25 start
+        // 子是否传父 tms业务需求 
+        // setChecked 第三个参数
+        let isRecursion = this.childNotEmitParent ? true : null
+        this.node.setChecked(ev.target.checked, !this.tree.checkStrictly, isRecursion);
+        // end
         this.$nextTick(() => {
           const store = this.tree.store;
           this.tree.$emit('check', this.node.data, {
