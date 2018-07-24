@@ -109,7 +109,7 @@
 
       isChecked() {
         if ({}.toString.call(this.model) === '[object Boolean]') {
-          if (this.$el && this.$el.offsetParent.className.indexOf('el-table-column--selection') > -1) {
+          if (this.$el && this.$el.offsetParent && this.$el.offsetParent.className && this.$el.offsetParent.className.indexOf('el-table-column--selection') > -1) {
             const tdArr = this.$el.offsetParent.parentElement.children;
             Array.prototype.slice.call(tdArr).forEach(item=>{
               const classArr = item.className ? item.className.split(/\s+/) : [];
